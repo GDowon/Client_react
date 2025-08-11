@@ -1,12 +1,9 @@
-// src/pages/MainPage.jsx
-import React from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // Link와 useNavigate 훅 import
-import '../Css/MainPage.css'; // MainPage 전용 CSS
-import '../Css/navi.css';     // Navi 전용 CSS
-import '../Css/font.css';     // Font 전용 CSS (App.js 또는 Index.js에 전역으로 넣는게 더 일반적)
-import Footer from '../components/Footer';
-import SearchBar from '../components/SearchBar';
-import PostList from '../components/PostList';
+import '../Css/MainPage.css'; 
+
+import Footer from '../Components/Footer';
+import SearchBar from '../Components/SearchBar';
+import PostList from '../Components/PostList';
 
 function MainPage() {
   const navigate = useNavigate(); // useNavigate 훅 사용
@@ -29,19 +26,19 @@ function MainPage() {
 
       {/* 상태 버튼 */}
       <div className="status-buttons">
-        <Link to="/mypage" className="notification">
+        <Link to="/current_borrow" className="notification">
           <span>대출 중 📖</span>
           <span className="badge">3</span>
           <span className="line">━━</span>
           <span className="unit">권</span>
         </Link>
-        <Link to="/mypage" className="notification">
+        <Link to="/current_reserve" className="notification">
           <span>예약 중 ⏰</span>
           <span className="badge">3</span>
           <span className="line">━━</span>
           <span className="unit">권</span>
         </Link>
-        <Link to="/mypage" className="notification">
+        <Link to="/current_overdue" className="notification">
           <span>연체 중 ⚠️</span>
           <span className="badge">5</span>
           <span className="line">━━</span>
@@ -57,7 +54,7 @@ function MainPage() {
         </div>
         <div className="banner-card">
           <Link to="/notice">
-            <img src="/images/banner.jpg" alt="공지사항배너이미지" className="banner-image" />
+            <img src="../Images/banner.jpg" alt="공지사항배너이미지" className="banner-image" />
           </Link>
         </div>
       </div>
