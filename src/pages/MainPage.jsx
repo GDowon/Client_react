@@ -1,17 +1,37 @@
-import { Link, useNavigate } from 'react-router-dom'; // Link와 useNavigate 훅 import
+// MainPage.jsx (리팩토링된 코드)
+
+import { Link, useNavigate } from 'react-router-dom';
 import '../Css/MainPage.css'; 
 
 import Footer from '../Components/Footer';
 import SearchBar from '../Components/SearchBar';
-import PostList from '../Components/PostList';
+import PostList from '../Components/PostList'; // PostList 컴포넌트를 활용
 
 function MainPage() {
-  const navigate = useNavigate(); // useNavigate 훅 사용
+  const navigate = useNavigate();
 
   const handleSearch = () => {
-    // 검색 버튼 클릭 시 SearchPage로 이동
     navigate('/search');
   };
+
+  // 공지, 큐레이션, 소개, 이용안내에 들어갈 더미 데이터 (임시로 생성)
+  const noticePosts = [
+    { title: '배너 이미지 공지사항입니다.', date: '24-01-20' },
+  ];
+  
+  const curationPosts = [
+    { title: '제목입니다.', date: '24-01-20' },
+    { title: '제목입니다.', date: '24-01-19' },
+    { title: '제목입니다.', date: '24-01-18' },
+  ];
+
+  const introPosts = [
+    { title: '제목입니다.', date: '24-01-20' },
+  ];
+
+  const guidePosts = [
+    { title: '제목입니다.', date: '24-01-19' },
+  ];
 
   return (
     <div className="main-container">
@@ -58,55 +78,34 @@ function MainPage() {
           </Link>
         </div>
       </div>
-
+      
       {/* 아래쪽 영역 */}
       <div className="bottom-sections">
         {/* 큐레이션 */}
         <div className="note">
-          <div className="section-header">
-            <span>👩‍🏫 큐레이션</span>
-            <Link className="plus-button" to="/curation">＋</Link>
-          </div>
-          <div className="card small-card">
-            <table className="board-table">
-              <tbody>
-                <tr><td className="title">제목입니다.</td><td>24-01-20</td></tr>
-                <tr><td className="title">제목입니다.</td><td>24-01-19</td></tr>
-                <tr><td className="title">제목입니다.</td><td>24-01-18</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <PostList 
+            title="큐레이션" 
+            icon="👩‍🏫" 
+            linkTo="/curation" 
+            posts={curationPosts} 
+          />
         </div>
 
         <div className="right-column">
           {/* 문중문고 소개 */}
-          <div className="note">
-            <div className="section-header">
-              <span>📚 문중문고 소개</span>
-              <Link className="plus-button" to="/guide">＋</Link>
-            </div>
-            <div className="card small-card">
-              <table className="board-table">
-                <tbody>
-                  <tr><td className="title">제목입니다.</td><td>24-01-20</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <PostList 
+            title="문중문고 소개" 
+            icon="📚" 
+            linkTo="/guide" 
+            posts={introPosts} 
+          />
           {/* 이용안내 */}
-          <div className="note">
-            <div className="section-header">
-              <span>ℹ️ 이용안내</span>
-              <Link className="plus-button" to="/guide">＋</Link>
-            </div>
-            <div className="card small-card">
-              <table className="board-table">
-                <tbody>
-                  <tr><td className="title">제목입니다.</td><td>24-01-19</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <PostList 
+            title="이용안내" 
+            icon="ℹ️" 
+            linkTo="/guide" 
+            posts={guidePosts} 
+          />
         </div>
       </div>
 
