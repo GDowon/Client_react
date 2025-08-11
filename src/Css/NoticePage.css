@@ -8,18 +8,7 @@
   body {
     max-width: 480px;
     margin: 0 auto;
-    background-color: #FFFDE7;
-  }
-
-  .top-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;       
-    position: relative;          
-    background-color: #FFFDE7;
-    margin-bottom: 20px;
-    padding: 20px 8px;
-
+    background-color: #ffffff;
   }
 
   h1 {

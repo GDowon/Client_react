@@ -60,3 +60,68 @@
   font-size: 16px;
   flex: 1;
 }
+
+/*Navi=Fooster*/
+
+/* 내비게이션바 */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  max-width: 480px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  height: 80px;
+  background: #E3F2FD;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 2px solid #ccc;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 99;
+}
+
+.nav-center-icon {
+  width: 60px;
+  height: 60px;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 13px;
+  color: black;
+  text-decoration: none;
+}
+
+.nav-item img {
+  width: 36px;
+  height: 36px;
+  margin-bottom: 3px;
+}
+
+
+/*탑바*/
+.top-bar {
+  position: relative;           /* 뒤로가기 버튼과 텍스트 배치용 */
+  display: flex;
+  justify-content: center;      /* 중앙 기준으로 텍스트 정렬 */
+  align-items: center;
+  font-size: 20px;
+  font-weight: 800;
+  background-color: #FFFDE7;
+  padding: 15px;
+  border-bottom: 1px solid #ccc; /* 하단 선 */
+  margin-bottom: 15px;
+}
+
+.back-btn {
+  position: absolute;           /* 항상 왼쪽에 고정 */
+  left: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}

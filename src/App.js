@@ -1,9 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
-import './Css/navi.css';     
 import './Css/font.css'; 
+import './Css/toolkit.css';
+
+import StatusPage from './Components/StatusPage';
 
 import MainPage from './Pages/MainPage';
-import StatusPage from './Components/StatusPage';
+import NoticePage from './Pages/NoticePage';
+
 
 // 메인페이지, 현재 대출중 서버에서 각기 다른 데이터를 불러오는 가상의 함수들
 const fetchBorrowData = () => {
@@ -50,6 +53,8 @@ function App() {
           path="/current_reserve" 
           element={<StatusPage title="현재 예약 중인 도서" fetchData={fetchReserveData} />} 
         />
+
+        <Route path="/NoticePage" element={<NoticePage />} />
       </Routes>
     </div>
   );
