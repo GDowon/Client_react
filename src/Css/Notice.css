@@ -1,0 +1,53 @@
+
+  html, body {
+    height: 100%;
+    margin: 0;
+    background-color: white
+  }
+
+  body {
+    max-width: 480px;
+    margin: 0 auto;
+    background-color: #FFFDE7;
+  }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;       
+    position: relative;          
+    background-color: #FFFDE7;
+    margin-bottom: 20px;
+    padding: 20px 8px;
+
+  }
+
+  h1 {
+    font-size: 20px;
+    margin: 0;
+  }
+
+  .post {
+      margin-bottom: 20px;
+    }
+
+    .post-title {
+      cursor: pointer;
+      padding: 7px;
+      background-color: #E3F2FD;
+      border: 1px solid #ccc;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .post-content {
+      padding: 12px;
+      border-top: 1px solid #ccc;
+      font-size: 16px;
+      display: none;
+    }
+
+    .no-posts {
+      text-align: center;
+      padding: 20px;
+    }

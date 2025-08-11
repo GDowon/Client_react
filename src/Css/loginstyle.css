@@ -1,0 +1,120 @@
+
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: white ; 
+  }
+
+  body {
+    max-width: 480px;
+    margin: auto;
+    padding: 20px;
+    background-color: #FFFDE7;
+    display: flex;             
+    justify-content: center;   
+    align-items: flex-start;
+  }
+
+  .container {
+    background-color: white;
+    margin: 80px auto 0 auto; 
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    max-width: 360px;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .logo {
+    width: 120px;
+    margin: 0 auto 20px auto;
+    display: block;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* 입력란 - 밑줄 스타일 */
+  /* 텍스트, 비밀번호, 전화번호 입력란만 100% 적용 */
+input[type="text"],
+input[type="password"],
+input[type="tel"],
+input[type="email"] {
+  width: 100%;
+  max-width: 300px;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  background: transparent;
+  padding: 10px 5px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus,
+input[type="email"]:focus {
+  outline: none;
+  border-bottom-color: #007bff;
+}
+
+/* 체크박스는 가로 길이 늘어나지 않게 */
+input[type="checkbox"] {
+  width: auto;
+  margin-right: 8px;
+  transform: scale(1.2); /* 크기 조절하고 싶으면 */
+  vertical-align: middle;
+}
+
+.agreement {
+  display: flex;
+  align-items: center; /* 텍스트와 수직 가운데 정렬 */
+  font-size: 14px;
+  margin-bottom: 20px; /* 체크박스와 버튼 사이 간격 추가 */
+}
+
+  input:focus {
+    outline: none;
+    border-bottom-color: #007bff;
+  }
+  
+  /* 버튼 스타일은 유지 */
+  button {
+    padding: 10px;
+    margin-bottom: 15px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+    button:hover {
+    background: #0056b3;
+  } /* 로그인 버튼에 커서 올렸을 때 색 변함*/
+  
+  /* 링크 및 안내문 */
+  .helper-links,
+  p {
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  a {
+    color: #007bff;
+    text-decoration: underline;
+  }
+  
