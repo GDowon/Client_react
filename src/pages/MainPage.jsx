@@ -1,4 +1,3 @@
-// MainPage.jsx
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../Css/MainPage.css';
@@ -7,6 +6,7 @@ import Footer from '../Components/Footer';
 import SearchBar from '../Components/SearchBar';
 import PostList from '../Components/PostList';
 
+import noticebanner from '../Images/banner.jpg';
 
 const fetchBorrowData = () => {
   return new Promise(resolve => {
@@ -64,10 +64,6 @@ function MainPage() {
     loadCounts();
   }, []);
 
-  const handleSearch = () => {
-    navigate('/search');
-  };
-
   // 공지, 큐레이션, 소개, 이용안내에 들어갈 더미 데이터 (임시로 생성)
   const noticePosts = [
     { title: '배너 이미지 공지사항입니다.', date: '24-01-20' },
@@ -88,7 +84,7 @@ function MainPage() {
     <div className="main-container">
       <header className="header">
         <Link className="title" to="/">문중문고</Link>
-        <Link className="login-btn" to="/login">로그인 / 회원가입</Link>
+        <Link className="login-btn" to="/LoginPage">로그인 / 회원가입</Link>
       </header>
 
       <SearchBar />
@@ -134,7 +130,7 @@ function MainPage() {
         </div>
         <div className="banner-card">
           <Link to="/NoticePage">
-            <img src="Images/banner.jpg" alt="공지사항 배너이미지" className="banner-image" />
+            <img src={noticebanner} alt="공지사항 배너이미지" className="banner-image" />
           </Link>
         </div>
       </div>
