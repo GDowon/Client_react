@@ -1,6 +1,7 @@
-// src/components/SearchBar.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import '../Css/toolkit.css'; 
 
 function SearchBar() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -11,7 +12,7 @@ function SearchBar() {
     if (searchTerm.trim()) {
       navigate(`/search?query=${searchTerm}`);
     } else {
-      navigate('/search');
+      navigate('/SearchPage');
     }
   };
 

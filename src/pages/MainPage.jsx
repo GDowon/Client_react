@@ -140,7 +140,7 @@ function MainPage() {
           <PostList 
             title="큐레이션" 
             icon="👩‍🏫" 
-            linkTo="/curation" 
+            linkTo="/CurationPage" 
             posts={curationPosts} 
           />
         </div>
@@ -149,13 +149,13 @@ function MainPage() {
           <PostList 
             title="문중문고 소개" 
             icon="📚" 
-            linkTo="/guide" 
+            linkTo="/GuidePage" 
             posts={introPosts} 
           />
           <PostList 
             title="이용안내" 
             icon="ℹ️" 
-            linkTo="/guide" 
+            linkTo="/GuidePage" 
             posts={guidePosts} 
           />
         </div>

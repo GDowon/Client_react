@@ -1,5 +1,13 @@
 import React, { useMemo, useRef, useState, useEffect } from "react";
+import { Link, useNavigate } from 'react-router-dom';
+import '../Css/SearchPage.css';
 
+import Footer from "../Components/Footer";
+import SearchBar from "../Components/SearchBar";
+
+import blank_hearts from '../Images/blank_hearts.png';
+import red_hearts from '../Images/red_hearts.png';
+import book1 from '../Images/book1.jpg';
 
 const INITIAL_BOOKS = [
   {
@@ -8,11 +16,12 @@ const INITIAL_BOOKS = [
     author: "한국문헌정보학회",
     publisher: "한국도서관회",
     code: "020",
-    cover: "/Images/book1.jpg",
+    location: "문헌정보학과 과방",
+    cover: book1,
     popularity: 60,
     liked: false,
     status: "available", // available | reserved | unavailable
-    href: "/Pages/searchresult.html",
+    href: "../BookPage",
   },
   {
     id: 2,
@@ -24,7 +33,7 @@ const INITIAL_BOOKS = [
     popularity: 75,
     liked: false,
     status: "available",
-    href: "/Pages/searchresult.html",
+    href: "../BookPage",
   },
   {
     id: 3,
@@ -36,7 +45,7 @@ const INITIAL_BOOKS = [
     popularity: 40,
     liked: false,
     status: "reserved",
-    href: "/Pages/searchresult.html",
+    href: "../BookPage",
   },
   {
     id: 4,
@@ -48,7 +57,7 @@ const INITIAL_BOOKS = [
     popularity: 95,
     liked: true,
     status: "available",
-    href: "/Pages/searchresult.html",
+    href: "../BookPage",
   },
 ];
 
@@ -56,11 +65,12 @@ export default function SearchResult() {
   const [books, setBooks] = useState(INITIAL_BOOKS);
   const [query, setQuery] = useState("");
   const [sortOpen, setSortOpen] = useState(false);
-  const [sortMode, setSortMode] = useState("자모순"); // '자모순' | '인기도순'
+  const [sortMode, setSortMode] = useState("오름차순");
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMsg, setModalMsg] = useState("");
   const searchRef = useRef(null);
   const dropdownRef = useRef(null);
+  const navigate = useNavigate();
 
   // 드롭다운 외부 클릭 닫기
   useEffect(() => {
@@ -86,7 +96,7 @@ export default function SearchResult() {
 
   const sorted = useMemo(() => {
     const list = [...filtered];
-    if (sortMode === "자모순") {
+    if (sortMode === "오름차순") {
       list.sort((a, b) => a.title.localeCompare(b.title, "ko"));
     } else {
       list.sort((a, b) => b.popularity - a.popularity);
@@ -118,10 +128,12 @@ export default function SearchResult() {
     }
   };
 
+  /*
   const clearSearch = () => {
     setQuery("");
     searchRef.current?.focus();
   };
+  */
 
   const closeModal = () => {
     setModalOpen(false);
@@ -129,37 +141,37 @@ export default function SearchResult() {
 
   return (
     <div>
-      {/* 상단바 (원래 마크업 유지) */}
       <div className="top-bar">
-        <a href="/Pages/MainPage.html" className="back-btn" aria-label="뒤로가기">
+        <a href="/" className="back-btn" aria-label="뒤로가기">
           ←
         </a>
         {/* 오타 호환: top-tittle + 수정본 top-title 둘 다 부여 */}
         <span className="top-tittle top-title">검색 결과</span>
       </div>
 
-      {/* 검색창 */}
-      <header className="search-header">
-        <div className="search-box">
-          <input
-            id="search-input"
-            ref={searchRef}
-            type="text"
-            placeholder="도서 검색..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          <button
-            id="clear-btn"
-            className="clear-btn"
-            type="button"
-            onClick={clearSearch}
-            aria-label="검색어 지우기"
-          >
-            ✕
-          </button>
-        </div>
-      </header>
+      <SearchBar/>
+        {
+          /*
+          <header className="search-header">
+            <div className="search-box">
+              <input
+                id="search-input"
+                ref={searchRef}
+                type="text"
+                placeholder="도서 검색..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+              <button
+                id="clear-btn"
+                className="clear-btn"
+                type="button"
+                onClick={clearSearch}
+                aria-label="검색어 지우기"
+              >
+                ✕
+              </button>*/
+        }
 
       {/* 정렬 영역 */}
       <section className="sort-section">
@@ -182,7 +194,7 @@ export default function SearchResult() {
             role="listbox"
             aria-label="정렬 옵션"
           >
-            {["자모순", "인기도순"].map((opt) => (
+            {["오름차순", "내림차순"].map((opt) => (
               <li
                 key={opt}
                 role="option"
@@ -200,34 +212,43 @@ export default function SearchResult() {
       </section>
 
       {/* 도서 목록 */}
-      <section className="book-list" id="book-list">
+        <section className="book-list" id="book-list">
         {sorted.map((b) => (
-          <div className="book-card" key={b.id} data-popularity={b.popularity}>
-            <div className="book-cover">
-              <img className="cover-img" src={b.cover} alt={`${b.title} 책 표지`} />
-              <div
-                className="heart-icon-wrapper"
-                onClick={() => toggleHeart(b.id)}
-                role="button"
-                aria-label={b.liked ? "좋아요 취소" : "좋아요"}
-                title={b.liked ? "좋아요 취소" : "좋아요"}
-              >
-                <img
-                  className="heart-icon"
-                  src={b.liked ? "/Images/red_hearts.png" : "/Images/blank_hearts.png"}
-                  alt="좋아요 아이콘"
-                />
+          <div className="book-card" key={b.id}>
+            
+            {/* 1. 클릭 가능한 새로운 컨테이너 */}
+            <div
+              className="book-clickable-area"
+              onClick={() => navigate(b.href)} // 클릭 시 상세 페이지로 이동
+              role="link"
+              tabIndex="0"
+              aria-label={`${b.title} 상세 정보 보기`}
+            >
+              <div className="book-cover">
+                <img className="cover-img" src={b.cover} alt={`${b.title} 책 표지`} />
+              </div>
+              <div className="book-info">
+                <h2 className="book-title">{b.title}</h2>
+                <h3 className="author">{b.author}</h3>
+                <h3 className="publisher">{b.publisher}</h3>
+                <p className="code">{b.code}</p>
+                <p className="location">{b.location}</p>
               </div>
             </div>
 
-            <div className="book-info">
-              {/* 라우터 쓰면 <Link to={b.href}>로 교체 */}
-              <a className="book-title" href={b.href}>
-                {b.title}
-              </a>
-              <p className="author">{b.author}</p>
-              <p className="publisher">{b.publisher}</p>
-              <p className="code">{b.code}</p>
+            {/* 2. 상호작용 요소들은 클릭 컨테이너 밖으로 분리 */}
+            <div
+              className="heart-icon-wrapper"
+              onClick={() => toggleHeart(b.id)}
+              role="button"
+              aria-label={b.liked ? "좋아요 취소" : "좋아요"}
+              title={b.liked ? "좋아요 취소" : "좋아요"}
+            >
+              <img
+                className="heart-icon"
+                src={b.liked ? red_hearts : blank_hearts}
+                alt="좋아요 아이콘"
+              />
             </div>
 
             <button
@@ -238,28 +259,12 @@ export default function SearchResult() {
             >
               {b.status === "available" ? "대출신청" : b.status === "reserved" ? "예약중" : "불가"}
             </button>
+            
           </div>
         ))}
       </section>
 
-      {/* 하단 내비 */}
-      <footer className="bottom-nav">
-        <a className="nav-item" href="/Pages/loan.html">
-          <img src="/Images/navigation1.png" alt="대출반납 아이콘" />
-          <span>대출·반납</span>
-        </a>
-
-        <div className="nav-center">
-          <a href="/Pages/MainPage.html">
-            <img src="/Images/navigation2.png" alt="문중문고 아이콘" className="nav-center-icon" />
-          </a>
-        </div>
-
-        <a className="nav-item" href="/Pages/MyPage.Pgs/mypage.html">
-          <img src="/Images/navigation3.png" alt="마이페이지 아이콘" />
-          <span>마이페이지</span>
-        </a>
-      </footer>
+      <Footer/>
 
       {/* 모달 */}
       {modalOpen && (

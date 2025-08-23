@@ -55,7 +55,14 @@ function Signup() {
 
   return (
     <div className="login-container">
-      <img src={logoImage} alt="로고" className="logo" />
+      <div className="blue-top-bar">
+          <a href="LoginPage" className="back-btn" aria-label="뒤로가기">
+            ←
+          </a>
+        </div>
+      <Link to="/">
+          <img src={logoImage} alt="로고" className="logo" />
+        </Link>
       <h2>회원가입</h2>
       <form onSubmit={handleSignup}>
         <input type="text" id="name" placeholder="이름" value={formData.name} onChange={handleChange} required />

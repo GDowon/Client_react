@@ -36,7 +36,14 @@ function ResetPassword() {
 
   return (
     <div className="login-container">
-      <img src={logoImage} alt="로고" className="logo" />
+      <div className="blue-top-bar">
+          <a href="LoginPage" className="back-btn" aria-label="뒤로가기">
+            ←
+          </a>
+        </div>
+      <Link to="/">
+          <img src={logoImage} alt="로고" className="logo" />
+        </Link>
       <h2>비밀번호 찾기</h2>
       <form onSubmit={handleFindPassword}>
         <input
@@ -79,9 +86,6 @@ function ResetPassword() {
 
         <button type="submit">비밀번호 찾기 및 변경</button>
       </form>
-      <p>
-        <Link to="/LoginPage">로그인으로 돌아가기</Link>
-      </p>
     </div>
   );
 }

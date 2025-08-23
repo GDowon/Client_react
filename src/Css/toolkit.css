@@ -62,7 +62,6 @@
 }
 
 /*Navi=Fooster*/
-
 /* 내비게이션바 */
 .bottom-nav {
   position: fixed;
@@ -117,6 +116,19 @@
   margin-bottom: 15px;
 }
 
+/*로그인 창 파랑색 탑바*/
+.blue-top-bar {
+  position: relative;           /* 뒤로가기 버튼과 텍스트 배치용 */
+  display: flex;
+  justify-content: center;      /* 중앙 기준으로 텍스트 정렬 */
+  align-items: center;
+  font-size: 20px;
+  font-weight: 800;
+  background-color:#f3faff;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
 .back-btn {
   position: absolute;           /* 항상 왼쪽에 고정 */
   left: 10px;
@@ -124,4 +136,172 @@
   cursor: pointer;
   text-decoration: none;
   color: inherit;
+  background-color: transparent;
+  border-radius: 30px;
+  transition: background-color 0.3s ease;
 }
+
+.back-btn:hover {
+  background-color: #ffffff;
+  border-radius: 30px;
+}
+
+.back-btn::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  white-space: nowrap;
+  padding-top: 4px;
+  font-size: 12px;
+  color: #666;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.back-btn:hover::after {
+  content: '뒤로가기';
+  opacity: 1;
+}
+
+/*SearchBar*/
+.search-header {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 15px;
+  border-bottom: 1px solid #ccc;
+  background-color: #FFFDE7;
+}
+
+.search-box {
+  position: relative;
+  width: 100%;
+  display: flex;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 10px 40px 10px 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.clear-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.search-bar {
+  width: 100%;
+  max-width: 420px;
+  height: 55px;
+  background: #FFFFFF;
+  border: 1px solid #ccc;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.search-bar input {
+  
+  border: none;
+  outline: none;
+  font-size: 16px;
+  background: transparent;
+}
+
+.search-bar button {
+  padding: 10px 18px;
+  background-color: #625B71;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*기존 팝업모달*/
+/* 모달 배경 (전체 화면 덮기) */
+#loan-modal {
+  position: fixed;       /* 화면 고정 */
+  top: 0; left: 0;       /* 좌상단부터 시작 */
+  width: 100vw;          /* 화면 가로 전체 */
+  height: 100vh;         /* 화면 세로 전체 */
+  background: rgba(0, 0, 0, 0.5); /* 반투명 검은 배경 */
+  display: flex;         /* 내용 중앙 정렬을 위한 flex */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;         /* 다른 요소 위에 표시 */
+}
+
+/* 모달 내용 박스 */
+.modal-content {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  min-width: 300px;
+  text-align: center;
+}
+
+/* 확인 버튼 스타일 (필요하면 수정) */
+#modal-close-btn {
+  margin-top: 20px;
+  padding: 8px 20px;
+  border: none;
+  background-color: #007BFF;
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#modal-close-btn:hover {
+  background-color: #0056b3;
+}
+
+.hidden {
+  display: none !important;
+}
+
+
+/*Current*/
+.section {
+      margin-bottom: 40px;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 8px;
+      background-color: white;
+    }
+
+    .section:first-of-type {
+    margin-top: 20px;
+    }
+    
+    h1 {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    h2 {
+      font-size: 18px;
+      margin-top: 20px;
+      margin-bottom: 8px;
+    }
+    p {
+      font-size: 16px;
+      margin: 0;
+    }

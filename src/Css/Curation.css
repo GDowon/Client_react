@@ -1,43 +1,9 @@
 
-html, body {
-  height: 100%;
-  margin: 0;
-  background-color: white
-  }
-
-body {
-  max-width: 480px;
-  margin: 0 auto;
-  background-color: white
-  } 
-
 .active {
   background-color: #ccc;
   font-weight: bold;
 }
     
-.top-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;       
-  position: relative;          
-  background-color: #FFFDE7;
-  margin-bottom: 20px;
-  padding: 20px 8px;
-
-}
-
-.back-btn {
-  position: absolute;          
-  left: 8px;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.back-btn:active {
-  font-weight: 700; /* 눌렸을 때 굵게 */
-}
-
 /* 버튼 영역 스타일 */
 .guide-buttons {
   display: flex;
@@ -101,6 +67,11 @@ body {
   border-right: 1px solid #eee;
 }
 
+.sub-buttons button:hover {
+  background-color: #E3F2FD;
+  color: #333;
+  transition: backgroud 0.3s ease;
+}
 .book-list {
   display: flex;
   flex-wrap: wrap;
@@ -140,7 +111,7 @@ body {
 }
 
 .book-info a:hover {
-  text-decoration: underline; /* 커서 올렸을 때만 밑줄 표시 */
+  text-decoration: underline;
 }
 
 .book-author-publisher {

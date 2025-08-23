@@ -19,7 +19,7 @@ function Footer() {
         </Link>
       </div>
 
-      <Link className="nav-item" to="/mypage">
+      <Link className="nav-item" to="/MyPage">
         <img src={navigation3} alt="마이페이지 아이콘" />
         <span>마이페이지</span>
       </Link>

@@ -34,7 +34,14 @@ function FindId() {
 
   return (
     <div className="login-container">
-      <img src={logoImage} alt="로고" className="logo" />
+      <div className="blue-top-bar">
+          <a href="LoginPage" className="back-btn" aria-label="뒤로가기">
+            ←
+          </a>
+        </div>
+      <Link to="/">
+          <img src={logoImage} alt="로고" className="logo" />
+        </Link>
       <h2>아이디 찾기</h2>
       <form onSubmit={handleFindId}>
         <input
@@ -54,9 +61,6 @@ function FindId() {
         </div>
         <button type="submit">아이디 찾기</button>
       </form>
-      <p>
-       <Link to="/LoginPage">로그인으로 돌아가기</Link>
-      </p>
     </div>
   );
 }

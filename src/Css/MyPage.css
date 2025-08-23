@@ -1,0 +1,116 @@
+    .settings-btn {
+      font-size: 20px;
+      cursor: pointer;
+    }
+    h1 {
+      font-size: 20px;
+      margin: 10px 0;
+    }
+    .user-info {
+      margin-bottom: 10px;
+    }
+    .user-info div {
+      margin-bottom: 4px;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #ccc;
+      margin: 16px 0;
+    }
+    .section-box {
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+    .book-list {
+      display: flex;
+      gap: 8px;
+    }
+    .book-list img {
+      width: 80px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+    .loan-reserve-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .loan, .reserve {
+      flex: 1;
+      background-color: #ffffff;
+      padding: 10px;
+      border-radius: 12px;
+      position: relative;
+    }
+    .arrow {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      font-size: 18px;
+      cursor: pointer;
+      color: #444;
+    }
+
+
+    .nav-link {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-top: 1px solid #ccc;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+      color:inherit;
+      text-decoration:none;
+    }
+
+  
+    .user-info {
+      margin-bottom: 16px;
+    }
+
+    .name-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .settings-btn {
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    /* nav-links block spacing */
+    .nav-block {
+      margin: 24px 0;
+    }
+
+    /* nav-block spacing */
+    .nav-block {
+      margin: 24px 0;
+    }
+    /* move separator line up */
+    .nav-block + hr {
+      margin-top:     -20px;
+      margin-bottom: 16px;
+    }
+    
+    .nav-link:hover {
+      font-weight: 700;
+      text-decoration: underline;
+      color:#004f87;
+    }
+
+    /* 대출장서, 예약장서 제목 hover visual change: underline and color change */
+    .section-title:hover {
+      text-decoration: underline;
+      color:#004f87;
+    }

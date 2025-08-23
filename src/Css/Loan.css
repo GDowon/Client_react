@@ -1,36 +1,4 @@
-/* html, body {
-  height: 100%;
-  margin: 0;
-  background-color: white /* 노란색 */
-  /* }
 
-.body {
-      background-color: #797979;
-      max-width: 480px;
-      margin: 0 auto;
-      padding: 20px;
-      font-family: 'Pretendard', sans-serif;
-      box-sizing: border-box;
-    } */ */
-
-html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      background-color: #ffffff;
-    }
-
-    body {
-      max-width: 480px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
-      gap: 20px;
-      padding: 20px;
-      background-color: #FFFfff;
-      box-sizing: border-box;
-    }
 
     .container {
         width: 100%;

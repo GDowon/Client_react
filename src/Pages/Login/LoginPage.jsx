@@ -27,6 +27,11 @@ function LoginPage() {
   return (
     <div calssName="page-center">
       <div className="login-container">
+        <div className="blue-top-bar">
+          <a href="/" className="back-btn" aria-label="뒤로가기">
+            ←
+          </a>
+        </div>
         <Link to="/">
           <img src={logoImage} alt="로고" className="logo" />
         </Link>
