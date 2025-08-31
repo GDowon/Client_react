@@ -1,0 +1,146 @@
+
+  html, body {
+    height: 100%;
+    margin: 0;
+    background-color: white
+  }
+
+  body {
+    max-width: 480px;
+    margin: 0 auto;
+    background-color: white
+  }
+ 
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;       
+    position: relative;          
+    background-color: #FFFDE7;
+    margin-bottom: 20px;
+    padding: 20px 8px;
+
+  } 
+
+  .back-btn {
+    position: absolute;          
+    left: 8px;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  h1 {
+    font-size: 20px;
+    margin: 0;
+  }
+  
+  /* 타이틀 스타일 */
+  .title {
+    font-size: 20px;
+    color: #333;
+  }
+  
+  .title:hover {
+    color: #007bff;
+  }
+  
+  /* 버튼 영역 스타일 */
+  .guide-buttons {
+    display: flex;
+    justify-content: space-between; /* 버튼 간 간격 없음 */
+    margin-bottom: 20px;
+  }
+  
+  .guide-buttons button {
+    flex: 1; /* 버튼 너비 균등 분할 */
+    font-size: 15px;
+    font-weight: bold;
+    background-color: transparent;
+    color: #333;
+    border: none; /* 테두리 없음 */
+    border-bottom: 2px solid transparent; /* 밑줄만 */
+    cursor: pointer;
+  }
+  
+  /* 호버 효과 */
+  .guide-buttons button:hover {
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
+  }
+  
+  /* 활성 탭 버튼 - 검정색 밑줄 */
+  .guide-buttons button.active {
+    color: #000;
+    font-weight: bold;
+    border-bottom: 2px solid #000;
+  }
+
+  /* 콘텐츠 영역 */
+  .guide-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #fff;
+  }
+  
+.sitemap-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  padding: 40px;
+}
+
+.sitemap-column h1 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.sitemap-column ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.sitemap-column li {
+  margin-bottom: 6px;
+  color: #555;
+}
+
+ /* 사이트맵 링크 텍스트 */
+a {
+  text-decoration: none;
+  color: black;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+ /* 사이트맵 css */
+.sitemap-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.sitemap-box {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  min-height: 300px;
+  font-size: 20px;
+  background-color: #fff;
+}
+
+.sitemap-box h1 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.sitemap-box ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.sitemap-box li {
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
