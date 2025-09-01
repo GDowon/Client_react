@@ -1,0 +1,14 @@
+:root{
+  --color-white: #FFFFFF;
+  --color-yellow-light-bg: #FFFDE7;
+  --color-yellow-btn: #FFF89C;
+  --color-nav-blue: #E3F2FD;
+  --color-blue-verylight-bg: #F3FAFF;
+  --color-blue-login: #0095ff;
+  --color-blue-login-hover: #004f87;
+  --color-gray-searchbtn: #625B71;
+  --color-alert-change: #FFC5B2;
+  --color-notice-violet: #FEF7FF;
+}
+.back-btn:hover { font-weight:700; }
+nav a:hover { text-decoration: underline; color: var(--color-blue-login-hover); }

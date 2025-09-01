@@ -1,0 +1,1 @@
+window.ENV = { API_BASE_URL: 'https://mungo.p-e.kr' };

@@ -8,7 +8,7 @@ import navigation3 from '../Images/navigation3.png';
 function Footer() {
   return (
     <footer className="bottom-nav">
-      <Link className="nav-item" to="/LoanChoice">
+      <Link className="nav-item" to="/loan">
         <img src={navigation1} alt="대출반납 아이콘" />
         <span>대출·반납</span>
       </Link>
