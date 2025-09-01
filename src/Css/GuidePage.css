@@ -32,12 +32,6 @@
     cursor: pointer;
   }
   
-  /* 호버 효과 */
-  .guide-buttons button:hover {
-    color: #007bff;
-    border-bottom: 2px solid #007bff;
-  }
-  
   /* 활성 탭 버튼 - 검정색 밑줄 */
   .guide-buttons button.active {
     color: #000;
@@ -51,7 +45,7 @@
     padding: 20px;
     background-color: #fff;
   }
-  
+
 .sitemap-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));

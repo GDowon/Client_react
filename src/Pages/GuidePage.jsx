@@ -63,7 +63,7 @@ function GuidePage() {
           className={activeTab === 'use' ? 'active' : ''} 
           onClick={() => setActiveTab('use')}
         >
-          문중문고 이용안내
+          문중문고<br />이용안내
         </button>
         <button 
           className={activeTab === 'notice' ? 'active' : ''} 
