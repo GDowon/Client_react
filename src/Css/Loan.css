@@ -1,16 +1,41 @@
 
 
-    .container {
-        width: 100%;
-        max-width: 480px;
+.section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: #FFFDE7;
+  padding: 20px;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.section:hover {
+  background: #E3F2FD;
+}
+
+p {
+  font-size: 16px;
+  margin: 0;
+}
+
+    .loan-container {
+        width: 480px;
         margin: 0 auto;
-        background-color: #FFFDE7;
+        background-color: #ffffff;
         min-height: 100vh;
         padding: 20px 16px;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
         align-items: center; 
+        text-align: center;
     }
 
     .logo {
@@ -37,40 +62,15 @@
       border-radius: 8px;
       cursor: pointer;
       font-size: 16px;
+      box-sizing: border-box;
+      width: 220px;
+      text-align: center;
+      align-items: center; 
     }
 
     .submit-btn:hover {
       background-color: #555;
     }
-
-/* .sub-title {
-  font-size: 20px;
-  font-weight: middle;
-  text-decoration: none;
-  color: black;
-  align-items: center;
-} */
-
-.top-bar {
-  position: relative;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 16px; 
-  box-sizing: border-box;
-}
-
-.back-btn {
-  position: absolute;          
-  left: 8px;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.back-btn:active {
-  font-weight: 700; /* 눌렸을 때 굵게 */
-}
 
 .sub-title {
   font-size: 20px;
@@ -79,14 +79,10 @@
 
 h1 {
     font-size: 20px;
-    margin: 10px 0;
+    margin: 0;
 }
 
-form {
-  width: 100%;
-}
-
-.form-group {
+.loan-form {
   width: 100%;
 }
 
@@ -95,11 +91,6 @@ form {
   box-sizing: border-box;
 }
 
-.submit-btn {
-  width: 100%;
-  margin-top: 20px;
-  box-sizing: border-box;
-}
 
 .input-guide {
     font-size: 10px;

@@ -1,3 +1,17 @@
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  background-color: #FFFFFF
+  }
+
+body {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #FFFFFF;
+  box-sizing: border-box;
+  }
+
 /* 팝업창 컨테이너 */
 .popup-main {
   position: fixed;
@@ -36,7 +50,6 @@
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
 .popup-content p {
   font-size: 18px;
   font-weight: bold;
@@ -49,7 +62,6 @@
   gap: 10px;
   margin-top: 40px; /* 메시지와 버튼 사이의 40px 간격 */
 }
-
 /* 버튼 공통 스타일 */
 .popup-btn {
   padding: 10px 20px;
@@ -80,12 +92,10 @@
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
   z-index: 99;
 }
-
 .nav-center-icon {
   width: 60px;
   height: 60px;
 }
-
 .nav-item {
   display: flex;
   flex-direction: column;
@@ -94,7 +104,6 @@
   color: black;
   text-decoration: none;
 }
-
 .nav-item img {
   width: 36px;
   height: 36px;
@@ -114,6 +123,7 @@
   padding: 15px;
   border-bottom: 1px solid #ccc; /* 하단 선 */
   margin-bottom: 15px;
+  width:100%
 }
 
 /*로그인 창 파랑색 탑바*/

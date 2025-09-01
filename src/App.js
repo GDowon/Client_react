@@ -20,6 +20,10 @@ import BookPage from './Pages/BookPage';
 import MyPage from './Pages/MyPage/MyPage';
 import MyReviewsPage from './Pages/MyPage/MyReviewsPage';
 import EditProfilePage from './Pages/MyPage/EditProfilePage';
+/*Loan*/
+import LoanChoice from './Pages/LoanPage/LoanChoice';
+import LoanLoan from './Pages/LoanPage/LoanLoan';
+import LoanReturn from './Pages/LoanPage/LoanReturn';
 
 
 
@@ -119,6 +123,13 @@ function App() {
         <Route path="/EditProfilePage" element={<EditProfilePage/>} 
         />
         <Route path="/MyReviewsPage" element={<MyReviewsPage/>} 
+        />
+
+        <Route path="/LoanChoice" element={<LoanChoice/>} 
+        />
+        <Route path="/LoanLoan" element={<LoanLoan/>} 
+        />
+        <Route path="/LoanReturn" element={<LoanReturn/>} 
         />
         
 
