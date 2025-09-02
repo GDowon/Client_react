@@ -114,6 +114,7 @@
   padding: 15px;
   border-bottom: 1px solid #ccc; /* 하단 선 */
   margin-bottom: 15px;
+  width: 100%
 }
 
 /*로그인 창 파랑색 탑바*/
