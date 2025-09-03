@@ -10,7 +10,6 @@ import GuidePage from './Pages/GuidePage';
 import StatusPage from './Components/StatusPage';
 /*Login*/
 import LoginPage from './Pages/Login/LoginPage';
-import ResetPassword from './Pages/Login/ResetPassword';
 import FindId from './Pages/Login/FindId';
 import SignUp from './Pages/Login/SignUp';
 /*Search*/
@@ -105,8 +104,6 @@ function App() {
         />
 
         <Route path="/LoginPage" element={<LoginPage />} 
-        />
-        <Route path="/ResetPassword" element={<ResetPassword/>} 
         />
         <Route path="/FindId" element={<FindId/>} 
         />

@@ -113,7 +113,7 @@ function Signup() {
         </div>
 
         <input type="text" id="id" placeholder="아이디" value={formData.id} onChange={handleChange} required />
-        <input type="password" id="password" placeholder="비밀번호" value={formData.password} onChange={handleChange} required />
+        <input type="password" id="password" placeholder="비밀번호(8자이상)" value={formData.password} onChange={handleChange} required />
         <input type="password" id="passwordConfirm" placeholder="비밀번호 확인" value={formData.passwordConfirm} onChange={handleChange} required />
 
         <div className="contact-input">
