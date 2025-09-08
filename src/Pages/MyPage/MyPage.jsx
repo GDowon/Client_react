@@ -93,7 +93,7 @@ function MyPage() {
 
       <div className="loan-reserve-row">
         <div className="loan">
-          <div className="section-title" onClick={() => navigate('/Current')}>대출장서</div>
+          <div className="section-title" onClick={() => navigate('/current_borrow')}>대출장서</div>
           <div className="book-list" id="loanBooks">
             {currentLoanBooks.map(book => (
               <img key={book.id} src={`https://via.placeholder.com/80x120?text=${book.text}`} alt={book.text} />
@@ -102,7 +102,7 @@ function MyPage() {
           <div className="arrow" onClick={handleNextLoanBooks}>›</div>
         </div>
         <div className="reserve">
-          <div className="section-title" onClick={() => navigate('/reserve-detail')}>예약장서</div>
+          <div className="section-title" onClick={() => navigate('/current_reserve')}>예약장서</div>
           <div className="book-list" id="reserveBooks">
             {currentReserveBooks.map(book => (
               <img key={book.id} src={`https://via.placeholder.com/80x120?text=${book.text}`} alt={book.text} />
