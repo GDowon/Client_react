@@ -8,12 +8,14 @@ function SearchBar() {
   const navigate = useNavigate();
 
   const handleSearch = () => {
-    // 검색어가 있으면 쿼리 파라미터와 함께 SearchPage로 이동합니다.
-    if (searchTerm.trim()) {
-      navigate(`/search?query=${searchTerm}`);
-    } else {
-      navigate('/SearchPage');
+    // 1. 검색어 없이 검색 버튼을 눌렀을 때 알림 띄우기
+    if (!searchTerm.trim()) {
+      alert('검색어를 입력해 주세요');
+      return; // 함수 실행을 여기서 중단
     }
+
+    // 검색어가 있으면 쿼리 파라미터와 함께 SearchPage로 이동합니다.
+    navigate(`/search?query=${encodeURIComponent(searchTerm.trim())}`);
   };
 
   const handleKeyPress = (e) => {

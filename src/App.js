@@ -32,7 +32,7 @@ import LoanReturn from './Pages/LoanPage/LoanReturn';
 /* ===================== */
 /* Fetch helpers (공통)  */
 /* ===================== */
-const BASE = '/api';
+const BASE = '';
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('access');
@@ -173,7 +173,7 @@ function App() {
         <Route path="/SignUp" element={<SignUp />} />
 
         {/* 검색/도서 상세 */}
-        <Route path="/SearchPage" element={<SearchPage />} />
+        <Route path="/search" element={<SearchPage />} />
         {/* ✅ bookId만 받음 */}
         <Route path="/BookPage/:bookId" element={<BookPage />} />
 
