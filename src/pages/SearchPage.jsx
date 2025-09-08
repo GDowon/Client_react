@@ -47,7 +47,7 @@ async function withRefreshRetry(requestFn) {
 // 검색 (A안: /books/?query=, 404/405면 B안: /search/?q=)
 async function searchBooksAPI(query, page = 1) {
   const callA = () =>
-    fetch(`/books/?query=${encodeURIComponent(query)}&page=${page}`, {
+    fetch(`/books/?search=${encodeURIComponent(query)}&page=${page}`, {
       headers: authHeaders(),
     });
 
@@ -134,6 +134,7 @@ export default function SearchPage() {
       setBooks([]);
       return;
     }
+    /*백엔드api로요청*/
     (async () => {
       setLoading(true);
       setErr(null);
@@ -234,6 +235,13 @@ export default function SearchPage() {
         </div>
       )}
 
+      {/* 2. 검색 결과가 없을 때 메시지 표시 */}
+      {!loading && !err && sorted.length === 0 && q && (
+        <div style={{ padding: "12px 15px", textAlign: "center", color: "#555" }}>
+          검색 결과가 없습니다.
+        </div>
+      )}
+
       {/* 도서 목록 */}
       {!loading && !err && (
         <section className="book-list" id="book-list">
@@ -290,4 +298,4 @@ export default function SearchPage() {
       <Footer />
     </div>
   );
-
+}
