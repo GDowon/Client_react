@@ -18,6 +18,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "https://mungo.p-e.kr",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -36,4 +37,5 @@
       "last 1 safari version"
     ]
   }
+
 }

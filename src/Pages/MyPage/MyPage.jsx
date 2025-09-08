@@ -1,14 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { getMyPage } from '../../api/user';
 import { Link, useNavigate } from 'react-router-dom';
 
 import '../../Css/MyPage.css'; 
-// 가상의 데이터 (원래는 API를 통해 받아옵니다)
-const USER_DATA = {
-  name: "김문중",
-  type: "자과생",
-  id: "kmj123",
-  phone: "010-1234-5678",
-};
 
 const HISTORY_BOOKS = [
   { id: 1, text: "Hist1" }, { id: 2, text: "Hist2" }, { id: 3, text: "Hist3" }
@@ -27,12 +21,33 @@ const ALL_RESERVE_BOOKS = [
 
 function MyPage() {
   // 1. 상태(State) 관리
-  const [userData] = useState(USER_DATA);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [loanPage, setLoanPage] = useState(0);
   const [reservePage, setReservePage] = useState(0);
   
   // 2. 페이지 이동을 위한 useNavigate 훅
   const navigate = useNavigate();
+  useEffect(() => {
+    let abort = false;
+    (async () => {
+      try{
+        const me = await getMyPage();
+        if(!abort) setUser(me);
+      }catch(e){
+        if(!abort) setError('정보를 불러오지 못했습니다.');
+        console.error(e);
+      }finally{
+        if(!abort) setLoading(false);
+      }
+    })();
+    return () => { abort = true; };
+  }, []);
+
+  if (loading) return <div className="container">불러오는 중…</div>;
+  if (error) return <div className="container" role="alert">{error}</div>;
+
 
   // 3. 이벤트 핸들러 함수들
   const handleNextLoanBooks = () => {
@@ -57,12 +72,12 @@ function MyPage() {
       <div className="user-info">
         <div className="name-row">
           <div style={{ fontSize: '19px', fontWeight: 'bold' }}>
-            {userData.name} <span style={{ fontSize: '14px', fontWeight: 'normal' }}>{userData.type}</span>
+            {user?.name} <span style={{ fontSize: '14px', fontWeight: 'normal' }}>{user?.type}</span>
           </div>
           <div className="settings-btn" onClick={() => navigate('/EditProfilePage')}>⚙️</div>
         </div>
-        <div>아이디: {userData.id}</div>
-        <div>전화번호: {userData.phone}</div>
+        <div>아이디: {user?.id}</div>
+        <div>전화번호: {user?.phone}</div>
       </div>
 
       <hr />
