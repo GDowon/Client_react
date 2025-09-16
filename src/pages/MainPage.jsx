@@ -91,7 +91,7 @@ function MainPage() {
 
       {/* 상태 버튼 */}
       <div className="status-buttons">
-        <Link to="/current_borrow" className="notification">
+        <Link to="/CurrentBorrow" className="notification">
           <span>대출 중 📖</span>
           {isLoading ? (
             <span className="badge">...</span>

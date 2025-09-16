@@ -8,6 +8,8 @@ import NoticePage from './Pages/NoticePage';
 import CurationPage from './Pages/CurationPage';
 import GuidePage from './Pages/GuidePage';
 import StatusPage from './Components/StatusPage';
+/*Current*/
+import CurrentBorrow from './Pages/CurrentBorrow';
 
 /* Login */
 import LoginPage from './Pages/Login/LoginPage';
@@ -124,18 +126,7 @@ function App() {
         <Route path="/" element={<MainPage />} />
 
         {/* 현재 대출/연체/예약 */}
-        <Route
-          path="/current_borrow"
-          element={
-            <>
-              <div className="top-bar">
-                <Link to="/" className="back-btn" aria-label="뒤로가기">←</Link>
-                <span className="top-tittle">현재 대출 중인 도서</span>
-              </div>
-              <StatusPage title="현재 대출 중" fetchData={fetchBorrowData} />
-            </>
-          }
-        />
+        <Route path="/CurrentBorrow" element={<CurrentBorrow />} />
         <Route
           path="/current_overdue"
           element={

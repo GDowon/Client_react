@@ -89,7 +89,7 @@ function LoginPage() {
           <button type="submit">로그인</button>
         </form>
         <p>
-          <Link to="/FindId">아이디 찾기</Link> | <a href="http://pf.kakao.com/_pHxbDn" target="_blank" rel="noopener noreferrer">비밀번호 찾기</a>
+          <Link to="/FindId">아이디 찾기</Link> | <a href="http://pf.kakao.com/_pHxbDn" target="_blank" rel="noopener noreferrer">비밀번호 관리자 문의</a>
         </p>
         <p>
           아직 계정이 없으신가요? <Link to="/SignUp">회원가입</Link>
