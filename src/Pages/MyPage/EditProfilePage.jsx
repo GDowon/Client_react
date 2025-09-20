@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../Css/MyPage.css';
-import { getMyPage, updateMyPage } from '../../api/user';
+import { getMyPage, updateMyPage } from '../../Api/user';
 
 export default function EditProfilePage() {
   const nav = useNavigate();

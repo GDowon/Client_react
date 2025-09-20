@@ -1,6 +1,6 @@
 // src/Pages/SearchPage.jsx
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import "../Css/SearchPage.css";
 
 import Footer from "../Components/Footer";
@@ -246,14 +246,15 @@ export default function SearchPage() {
       {!loading && !err && (
         <section className="book-list" id="book-list">
           {sorted.map((b) => (
-            <div className="book-card" key={b.id}>
+            // 기존 div를 Link 컴포넌트로 변경
+            <Link to={`/BookPage/${b.id}`} className="book-card" key={b.id}>
               {/* 표지 + 하트 (하트는 표지 내부 고정) */}
               <div className="book-cover">
                 <img className="cover-img" src={b.cover} alt={`${b.title} 책 표지`} />
                 <div
                   className="heart-icon-wrapper"
                   onClick={(e) => {
-                    e.stopPropagation();
+                    e.stopPropagation(); // Link 이동 방지
                     onToggleHeart(b.id);
                   }}
                   role="button"
@@ -267,7 +268,6 @@ export default function SearchPage() {
                   />
                 </div>
               </div>
-
               {/* 책 정보 */}
               <div className="book-info">
                 <h2 className="book-title">{b.title}</h2>
@@ -276,12 +276,12 @@ export default function SearchPage() {
                 <p className="code">{b.code}</p>
                 {b.location ? <p className="location">{b.location}</p> : null}
               </div>
-
               {/* 우측 버튼 (상세/대출신청 등) */}
               <button
                 className={`loan-btn ${b.status}`}
                 type="button"
-                onClick={() => navigate(`/book/${b.id}`)}
+                // Link 컴포넌트 내부에서 클릭 시 Link가 적용되지 않도록 이벤트 전파를 중단
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigate(`/LoanLoan?bookId=${b.id}`); }}
                 disabled={b.status === "unavailable"}
               >
                 {b.status === "available"
@@ -290,7 +290,7 @@ export default function SearchPage() {
                   ? "예약중"
                   : "불가"}
               </button>
-            </div>
+            </Link>
           ))}
         </section>
       )}

@@ -34,7 +34,7 @@ import LoanReturn from './Pages/LoanPage/LoanReturn';
 /* ===================== */
 /* Fetch helpers (공통)  */
 /* ===================== */
-const BASE = '';
+const BASE = 'https://mungo.p-e.kr';
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('access');
@@ -163,10 +163,10 @@ function App() {
         <Route path="/FindId" element={<FindId />} />
         <Route path="/SignUp" element={<SignUp />} />
 
-        {/* 검색/도서 상세 */}
+        {/* 검색 결과 */}
         <Route path="/search" element={<SearchPage />} />
         {/* ✅ bookId만 받음 */}
-        <Route path="/BookPage/:bookId" element={<BookPage />} />
+        <Route path="/BookPage/:bookid" element={<BookPage />} />
 
 
         {/* 마이페이지 */}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getMyPage } from '../../api/user';
+import { getMyPage } from '../../Api/user';
 import { Link, useNavigate } from 'react-router-dom';
 
 import '../../Css/MyPage.css'; 
