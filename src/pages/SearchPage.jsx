@@ -247,7 +247,7 @@ export default function SearchPage() {
         <section className="book-list" id="book-list">
           {sorted.map((b) => (
             // 기존 div를 Link 컴포넌트로 변경
-            <Link to={`/BookPage/${b.id}`} className="book-card" key={b.id}>
+            <Link to={`/BookPage/${b.id || b.book_code}`} className="book-card" key={b.id}>
               {/* 표지 + 하트 (하트는 표지 내부 고정) */}
               <div className="book-cover">
                 <img className="cover-img" src={b.cover} alt={`${b.title} 책 표지`} />

@@ -1,11 +1,10 @@
 // src/Pages/BookPage.jsx
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-
+import { useParams, useNavigate } from 'react-router-dom';
 import '../Css/font.css';
 import '../Css/BookPage.css';
 
-const BASE = '/api';
+const BASE = 'https://mungo.p-e.kr';
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('access');
@@ -72,14 +71,14 @@ const FALLBACK_BOOK = {
   series: '-',
   details: '-',
   notes: '-',
-  coverUrl: '', // ✅ 표지 URL 폴백
+  coverUrl: '',
 };
 
 const toText = (v) => (Array.isArray(v) ? v.filter(Boolean).join(' ; ') : (v ?? '-'));
 
 export default function BookPage() {
-  // 라우트가 /BookPage/:bookId 이므로 bookId는 숫자(pk) 또는 book_code가 올 수 있음
   const { bookId } = useParams();
+  const navigate = useNavigate();
 
   const [pk, setPk] = useState(null);
   const [resolving, setResolving] = useState(true);
@@ -92,18 +91,21 @@ export default function BookPage() {
   const [isReviewBoxOpen, setIsReviewBoxOpen] = useState(false);
   const [newReviewText, setNewReviewText] = useState('');
 
-  const openModal = (msg) => { setModalMsg(msg); setIsModalOpen(true); };
+  const openModal = (msg) => {
+    setModalMsg(msg);
+    setIsModalOpen(true);
+  };
 
   /** 1) URL의 bookId → pk 해석 (정확 매칭만) */
   useEffect(() => {
     const ac = new AbortController();
+
     async function resolvePk() {
       setResolving(true);
       setPk(null);
 
       try {
         const raw = String(bookId ?? '').trim();
-
         if (!raw) {
           setPk(null);
           return;
@@ -119,27 +121,22 @@ export default function BookPage() {
         if (/^MJ\d{6}$/i.test(raw)) {
           const code = raw.toUpperCase();
 
-          // 정확 매칭만: /books/?book_code=code
           const data = await fetchJSON(
             `/books/?book_code=${encodeURIComponent(code)}`,
             { auth: false, headers: {}, timeoutMs: 8000 }
           );
 
-          // 백엔드가 배열 또는 {results:[...]} 형태일 수 있으므로 정규화
           const list = Array.isArray(data) ? data : (data?.results ?? []);
-          // 정확 일치만 선택
-          const exact = list.find(b => (b?.book_code ?? b?.bookCode) === code);
+          const exact = list.find((b) => (b?.book_code ?? b?.bookCode) === code);
 
           if (exact?.id) {
             setPk(exact.id);
             return;
           }
-          // 정확히 못 찾으면 실패 처리
           setPk(null);
           return;
         }
 
-        // 위 둘이 아니면 유효하지 않은 라우팅으로 간주
         setPk(null);
       } catch (e) {
         if (e.name !== 'AbortError') {
@@ -157,14 +154,13 @@ export default function BookPage() {
 
   const invalidId = !Number.isFinite(pk) || pk <= 0;
 
-  /** 2) pk 기반 상세 + 리뷰 로드 (최신 요청만 반영) */
+  /** 2) pk 기반 상세 + 리뷰 로드 (resolving 완료 후 실행) */
   useEffect(() => {
-    if (invalidId) return;
+    if (resolving || invalidId) return; // ✅ pk 해석 중이면 대기
     const ac = new AbortController();
 
     async function load() {
       try {
-        // 상세
         const d = await fetchJSON(`/books/${pk}/`, { auth: true, timeoutMs: 8000 });
         if (ac.signal.aborted) return;
 
@@ -173,15 +169,12 @@ export default function BookPage() {
           author: toText(d?.author),
           edition: toText(d?.edition),
           publisher: toText(d?.publisher),
-          // 서버는 physical을 내려줄 수 있으니 우선 사용
           format: toText(d?.physical ?? d?.format),
-          // 서버는 callnumber / call_number / callNumber 등 혼용될 수 있으니 보정
           callNumber: toText(d?.call_number ?? d?.callNumber ?? d?.callnumber),
           status: d?.status ?? 'available',
           series: toText(d?.series),
           details: toText(d?.details),
           notes: toText(d?.notes),
-          // ✅ 표지 URL 매핑
           coverUrl: d?.image_url || '',
         });
         if (typeof d?.liked === 'boolean') setIsLiked(d.liked);
@@ -196,13 +189,14 @@ export default function BookPage() {
         const data = await fetchJSON(`/reviews/?book=${pk}`, { auth: false, timeoutMs: 8000 });
         if (ac.signal.aborted) return;
 
-        const list = (Array.isArray(data) ? data : (data?.results ?? []))
-          .map((r, idx) => ({
-            id: r.id ?? idx,
-            author: r.author ?? r.username ?? '익명',
-            date: r.date ? r.date.replaceAll('-', '/') : (r.created_at || '').slice(0, 10).replaceAll('-', '/'),
-            content: r.content ?? '',
-          }));
+        const list = (Array.isArray(data) ? data : (data?.results ?? [])).map((r, idx) => ({
+          id: r.id ?? idx,
+          author: r.author ?? r.username ?? '익명',
+          date: r.date
+            ? r.date.replaceAll('-', '/')
+            : (r.created_at || '').slice(0, 10).replaceAll('-', '/'),
+          content: r.content ?? '',
+        }));
         setReviews(list);
       } catch (err) {
         if (err.name !== 'AbortError') {
@@ -213,7 +207,7 @@ export default function BookPage() {
 
     load();
     return () => ac.abort();
-  }, [pk, invalidId]);
+  }, [pk, invalidId, resolving]); // ✅ resolving 의존성 추가
 
   /** 액션들 */
   const handleLikeToggle = async () => {
@@ -248,12 +242,16 @@ export default function BookPage() {
     try {
       await fetchJSON(`/reviews/`, { method: 'POST', auth: true, body: { book_id: pk, content } });
       const listData = await fetchJSON(`/reviews/?book=${pk}`, { auth: false });
-      const normalized = (Array.isArray(listData) ? listData : listData?.results || []).map((r, idx) => ({
-        id: r.id ?? idx,
-        author: r.author ?? r.username ?? '익명',
-        date: r.date ? r.date.replaceAll('-', '/') : (r.created_at || '').slice(0, 10).replaceAll('-', '/'),
-        content: r.content ?? '',
-      }));
+      const normalized = (Array.isArray(listData) ? listData : listData?.results || []).map(
+        (r, idx) => ({
+          id: r.id ?? idx,
+          author: r.author ?? r.username ?? '익명',
+          date: r.date
+            ? r.date.replaceAll('-', '/')
+            : (r.created_at || '').slice(0, 10).replaceAll('-', '/'),
+          content: r.content ?? '',
+        })
+      );
       setReviews(normalized);
     } catch (err) {
       console.error('[REVIEW CREATE] fail:', err);
@@ -286,22 +284,27 @@ export default function BookPage() {
 
   return (
     <div>
+      {/* ✅ 상단바 */}
       <div className="top-bar">
-        <Link to="/SearchPage" className="back-btn" aria-label="뒤로가기">←</Link>
+        <button onClick={() => navigate(-1)} className="back-btn" aria-label="뒤로가기">
+          ←
+        </button>
         <span className="top-title">상세 페이지</span>
       </div>
 
       {resolving ? (
-        <div className="container"><div className="info" style={{ marginTop: 16 }}>불러오는 중...</div></div>
+        <div className="container">
+          <div className="info" style={{ marginTop: 16 }}>불러오는 중...</div>
+        </div>
       ) : invalidId ? (
-        <div className="container"><div className="info" style={{ marginTop: 16 }}>
-          잘못된 도서 링크입니다. 목록에서 다시 시도해 주세요.
-        </div></div>
+        <div className="container">
+          <div className="info" style={{ marginTop: 16 }}>잘못된 도서 링크입니다. 목록에서 다시 시도해 주세요.</div>
+        </div>
       ) : (
         <>
           <div className="container">
             <div className="upsection">
-              {/* ✅ 표지 이미지 렌더 */}
+              {/* ✅ 표지 이미지 */}
               <div className="cover-section">
                 {bookData.coverUrl ? (
                   <img
@@ -347,8 +350,11 @@ export default function BookPage() {
           <div className="review">
             <div className="review-header">
               <h3>리뷰</h3>
-              <button className="register-button" type="button"
-                onClick={() => setIsReviewBoxOpen((p) => !p)}>
+              <button
+                className="register-button"
+                type="button"
+                onClick={() => setIsReviewBoxOpen((p) => !p)}
+              >
                 {isReviewBoxOpen ? '닫기' : '등록'}
               </button>
             </div>
@@ -366,27 +372,30 @@ export default function BookPage() {
             </div>
 
             {isReviewBoxOpen && (
-            <div className="typobox" id="typobox">
-              <textarea
-                id="reviewInput"
-                rows="4"
-                placeholder="리뷰를 입력하세요..."
-                value={newReviewText}
-                onChange={(e) => setNewReviewText(e.target.value)}
-                aria-label="리뷰 입력"
-                onKeyDown={(e) => {
-                  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-                    handleSubmitReview();
-                  }
-                }}
-              />
-              <br />
-              <button className="submit-button" type="button" onClick={handleSubmitReview}>
-                리뷰 등록
-              </button>
-            </div>
-          )}
-
+              <div className="typobox" id="typobox">
+                <textarea
+                  id="reviewInput"
+                  rows="4"
+                  placeholder="리뷰를 입력하세요..."
+                  value={newReviewText}
+                  onChange={(e) => setNewReviewText(e.target.value)}
+                  aria-label="리뷰 입력"
+                  onKeyDown={(e) => {
+                    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                      handleSubmitReview();
+                    }
+                  }}
+                />
+                <br />
+                <button
+                  className="submit-button"
+                  type="button"
+                  onClick={handleSubmitReview}
+                >
+                  리뷰 등록
+                </button>
+              </div>
+            )}
           </div>
         </>
       )}
@@ -395,7 +404,13 @@ export default function BookPage() {
         <div className="modal open" id="popupModal">
           <div className="modal-content">
             <p>{modalMsg || '처리가 완료되었습니다.'}</p>
-            <button className="close-btn" type="button" onClick={() => setIsModalOpen(false)}>닫기</button>
+            <button
+              className="close-btn"
+              type="button"
+              onClick={() => setIsModalOpen(false)}
+            >
+              닫기
+            </button>
           </div>
         </div>
       )}
