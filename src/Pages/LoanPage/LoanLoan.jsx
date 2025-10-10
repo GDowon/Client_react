@@ -9,7 +9,7 @@ import LoanForm from '../../Components/LoanForm';
 // 백엔드 API 통신에 필요한 함수와 URL 정의
 const BASE_URL = 'https://mungo.p-e.kr';
 const getAuthHeaders = () => {
-  const token = localStorage.getItem('accessToken');
+  const token = localStorage.getItem('access_token');
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
 async function fetchJSON(

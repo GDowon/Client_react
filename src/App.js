@@ -166,7 +166,7 @@ function App() {
         {/* 검색 결과 */}
         <Route path="/search" element={<SearchPage />} />
         {/* ✅ bookId만 받음 */}
-        <Route path="/BookPage/:bookid" element={<BookPage />} />
+        <Route path="/BookPage/:bookId" element={<BookPage />} />
 
 
         {/* 마이페이지 */}

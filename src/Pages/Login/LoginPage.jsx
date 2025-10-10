@@ -35,7 +35,7 @@ function LoginPage() {
           console.log('로그인 성공:', data);
           alert("성공적으로 로그인 되었습니다.");
           
-          localStorage.setItem('accessToken', data.access);
+          localStorage.setItem('access_token', data.access);
           localStorage.setItem('refreshToken', data.refresh);
           console.log('토큰이 localStorage에 저장되었습니다.');
 
