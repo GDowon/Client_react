@@ -4,8 +4,13 @@
   align-items: center;
   padding: 10px 15px;
   font-size: 14px;
+
 }
 
+.sort-toggle {
+  background: #FFFDE7;
+  color: black;
+}
 .sort-dropdown {
   position: relative;
 }
@@ -17,6 +22,7 @@
   border: 1px solid #ccc;
   width: 100px;
   background: #fff;
+  color: black;
   position: absolute;
   z-index: 10;
 }
@@ -41,6 +47,8 @@
 
 .book-list {
   padding: 0 15px;
+  display: flex; 
+  flex-direction: column;
 }
 
 .book-clickable-area {
@@ -69,23 +77,31 @@
 
 .heart-icon-wrapper {
   position: absolute;
-  top: 15px;
-  left: 75px;
-  width: 20px;
-  height: 20px;
-  background-color: white;
+  top: 12px;
+  left: 51px;
+  width: 28px;
+  height: 28px;
+  background-color: rgba(255, 255, 255, 0.95);
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 2;
   cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .heart-icon {
-  width: 16px;
-  height: 16px;
+  width: 20px !important;
+  height: 20px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  object-fit: contain !important;
+  object-position: center !important;
 }
+.heart-icon.filled { color: red; }
+.heart-icon.empty { color: #ddd; }
+
 
 .cover-img {
   width: 100%;
@@ -94,11 +110,17 @@
   border-radius: 4px;
 }
 
+.book-space {
+  display: flex;
+  flex-direction: row;
+  width: 100%; 
+}
 .book-info {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   text-align: left; 
+  margin-right: auto; 
 }
 
 .book-title {
@@ -134,26 +156,51 @@
 
 
 .loan-btn {
-  padding: 6px 12px;
+  width: 80px;
+  height: 30px;
+  text-align: center;
+  display: flex;
+  justify-content: center; /* 가로 중앙 정렬 */
+  align-items: center;
+  padding: 0; 
+  font-size: 13px;
+  white-space: nowrap;
   border: none;
   color: white;
   cursor: pointer;
-  border-radius: 4px;
-  font-size: 12px;
   white-space: nowrap;
   transition: background-color 0.3s;
 }
 
-.loan-btn.available {
-  background-color: #007BFF;
+
+/* 버튼 색상 기본 스타일 (SearchPage.css 등에 추가) */
+
+/* 대출가능 */
+.loan-btn.status-available {
+    background-color:  #0095ff; 
+    border-color: #0095ff; 
+    color: white;
 }
 
-.loan-btn.unavailable {
-  background-color: #999;
+/* 대출중  */
+.loan-btn.status-rented {
+    background-color: #FFFDE7 ;
+    color: #343a40;
+    border-color: #FFFDE7 ;
 }
 
-.loan-btn.reserved {
-  background-color: #f0ad4e;
+/* 예약중 */
+.loan-btn.status-reserved {
+    background-color: #FFF89C;
+    color:  #343a40;
+    border-color: #FFF89C;
 }
 
-
+/* 대출불가 (회색/비활성화) */
+.loan-btn.status-unavailable {
+    background-color: #6c757d; 
+    color: white;
+    border-color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.8;
+}

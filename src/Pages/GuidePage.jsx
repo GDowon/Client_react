@@ -1,18 +1,37 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import '../Css/GuidePage.css';
+import info1 from '../Images/info1.png';
+import info2 from '../Images/info2.png';
+import info3 from '../Images/info3.png';
+import info4 from '../Images/info4.png';
+import info5 from '../Images/info5.png';
 
 import Footer from '../Components/Footer';
 
 
 // 각 탭에 해당하는 콘텐츠를 작은 컴포넌트로 분리하면 코드가 깔끔해집니다.
-const UseContent = () => (
-  <div>
-    <h2>문중문고 이용안내</h2>
-    <p>여기에 이용안내 내용이 들어갑니다.</p>
-  </div>
-);
+const UseContent = () => {
+  const infoImages = [info1, info2, info3, info4, info5]; // 이미지 배열 생성
+return (
+    <div>
+      {infoImages.map((imageSrc, index) => (
+        <img 
+          key={index} 
+          src={imageSrc} 
+          alt={`이용안내 이미지 ${index + 1}`} 
+          style={{ 
+            maxWidth: '100%', // 이미지가 부모 컨테이너를 넘지 않도록
+            height: 'auto',  // 비율 유지
+            display: 'block', // 블록 요소로 만들어 마진 적용 용이
+            marginBottom: '15px' // 이미지 아래 여백
+          }} 
+        />
+      ))}
+    </div>
+  );
+};
 
 const NoticeContent = () => (
   <div>
@@ -24,14 +43,14 @@ const NoticeContent = () => (
 const SitemapContent = () => (
   <div>
     <h2>사이트맵</h2>
-    <p>사이트맵 내용</p>
+    <p>추후 업데이트 될 예정입니다!</p>
   </div>
 );
 
 const TermsContent = () => (
   <div>
     <h2>이용약관 및 개인정보처리방침</h2>
-    <p>약관 내용</p>
+    <p>약관 내용은 국가법령정보센터의 표준 개인정보 보호지침을 따릅니다. 국가법령정보센터의 서버 복구 이후 개재 예정.</p>
   </div>
 );
 
@@ -64,12 +83,6 @@ function GuidePage() {
           onClick={() => setActiveTab('use')}
         >
           문중문고 이용안내
-        </button>
-        <button 
-          className={activeTab === 'notice' ? 'active' : ''} 
-          onClick={() => setActiveTab('notice')}
-        >
-          공지사항
         </button>
         <button 
           className={activeTab === 'sitemap' ? 'active' : ''} 

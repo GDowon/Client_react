@@ -9,25 +9,18 @@ import Footer from '../Components/Footer';
 const CURATION_DATA = {
   guide: {
     basic: {
-      title: "문헌정보학원론 수강자",
-      books: [
-        { id: 1, title: "Foundations of Library and Information Science", author: "by Rechard E. Rubin", img: "/Images/basic_1.jpg", className: "" },
-        { id: 2, title: "文獻情報學原論", author: "정필모 지음", img: "/Images/basic_2.jpg", className: "hanja" },
-        { id: 3, title: "책 제목", author: "작가ㅣ출판사", img: "/Images/basic_3.jpg", className: "" },
-      ],
+      title: "25-10-31 업데이트 예정",
+      books : [],
+      
     },
-    required: { title: "전공필수", books: [] }, // 필요에 따라 도서 데이터 추가
+    required: { title: "전공필수", books: [] },
     major: { title: "전공", books: [] },
     liberal: { title: "교양", books: [] },
     related: { title: "타전공", books: [] },
   },
   notice: {
-    title: "추천도서 주제",
-    books: [
-      { id: 1, title: "추천도서 1", author: "작가ㅣ출판사", img: "/Images/파일 이름.jpg", className: "" },
-      { id: 2, title: "추천도서 2", author: "작가ㅣ출판사", img: "/Images/파일 이름.jpg", className: "hanja" },
-      { id: 3, title: "추천도서 3", author: "작가ㅣ출판사", img: "/Images/파일 이름.jpg", className: "" },
-    ],
+    title: "11월 큐레이션 예정",
+    books: [],
   },
 };
 
@@ -54,13 +47,13 @@ function CurationPage() {
       return (
         <div>
           <h2>{noticeData.title}</h2>
-          <div className="book-list">
+          <div className="cbook-list">
             {noticeData.books.map(book => (
-              <div className="book-item" key={book.id}>
+              <div className="cbook-item" key={book.id}>
                 <img src={book.img} alt={`${book.title} 표지`} width="110" height="160" />
-                <div className="book-info">
-                  <p className={`book-title ${book.className}`}>{book.title}</p>
-                  <p className="book-author">{book.author}</p>
+                <div className="cbook-info">
+                  <p className={`cbook-title ${book.className}`}>{book.title}</p>
+                  <p className="cbook-author">{book.author}</p>
                 </div>
               </div>
             ))}
@@ -77,13 +70,13 @@ function CurationPage() {
       return (
         <div>
           <h2>{guideData.title}</h2>
-          <div className="book-list">
+          <div className="cbook-list">
             {guideData.books.map(book => (
-              <div className="book-item" key={book.id}>
+              <div className="cbook-item" key={book.id}>
                 <img src={book.img} alt={`${book.title} 표지`} width="110" height="160" />
-                <div className="book-info">
-                  <p className={`book-title ${book.className}`}>{book.title}</p>
-                  <p className="book-author">{book.author}</p>
+                <div className="cbook-info">
+                  <p className={`cbook-title ${book.className}`}>{book.title}</p>
+                  <p className="cbook-author">{book.author}</p>
                 </div>
               </div>
             ))}

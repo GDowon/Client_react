@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import '../../Css/MyPage.css';
 import { getMyPage, updateMyPage } from '../../Api/user';
 
@@ -72,10 +72,10 @@ export default function EditProfilePage() {
 
   return (
     <div className="mypage-container">
-      <div className="page-header">
-        <button className="back-btn" onClick={() => nav(-1)}>◀</button>
-        <h2>회원정보수정</h2>
-      </div>
+      <div className="top-bar">
+              <Link to="/MyPage" className="back-btn" aria-label="뒤로가기">←</Link>
+              <span className="top-tittle">회원정보수정</span>
+            </div>
 
       <form className="edit-form" onSubmit={onSave}>
         <label htmlFor="name">이름</label>

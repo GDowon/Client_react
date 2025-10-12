@@ -131,3 +131,25 @@
       text-decoration: underline;
       color:var(--color-blue-login-hover);
     }
+
+    /* MyPage.css 또는 관련 CSS 파일에 추가 */
+
+.count-badge {
+    background-color: #FFFDE7 ;
+    color: #625B71;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 20px;          /* 최소 너비 설정 */
+    height: 20px;             /* 높이 고정 */
+    padding: 0 6px;           /* 좌우 패딩 */
+    margin-left: 0px;
+    border-radius: 10px;      /* 높이의 절반으로 설정하여 동그랗게 만듦 */
+    font-size: 12px;          /* 글자 크기 조정 */
+    font-weight: bold;
+}
+
+/* 연체 뱃지용 스타일 (선택 사항: 빨간색으로 오버라이드) */
+.count-badge.overdue {
+    background-color: red;
+}

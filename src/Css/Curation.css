@@ -72,7 +72,7 @@
   color: #333;
   transition: backgroud 0.3s ease;
 }
-.book-list {
+.cbook-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start; /* 왼쪽 정렬 */
@@ -80,13 +80,13 @@
 }
 
 /* 책 카드 전체 영역 감싸는 박스 */
-.book-item {
+.cbook-item {
   width: calc(33.333% - 20px); /* 3개씩 맞추되 간격 감안 */
   margin-bottom: 30px;
   text-align: center;
 }
 
-.book-image {
+.cbook-image {
   width: 180px;     
   height: 260px; 
   object-fit: cover; 
@@ -94,27 +94,25 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
-.book-info {
-  text-align: center; /* 모든 하위 요소 가운데 정렬 */
-}
 
-.book-info h3 {
+.cbook-info h3 {
   font-size: 25px;
   font-weight: bold;
   color: #333;
   margin-bottom: 4px;
+  text-align: center;
 }
 
-.book-info a {
+.cbook-info a {
   text-decoration: none; /* 책 제목 링크 기본 밑줄 제거 */
   color: inherit;
 }
 
-.book-info a:hover {
+.cbook-info a:hover {
   text-decoration: underline;
 }
 
-.book-author-publisher {
+.cbook-author-publisher {
   display: flex;
   justify-content: center;
   font-size: 17px;
@@ -122,20 +120,20 @@
   margin: 2px 0;
 }
 
-.book-author-publisher p {
+.cbook-author-publisher p {
   margin: 0 3px;
 }
 
-.book-author-publisher p::after {
+.cbook-author-publisher p::after {
   content: "•";
   margin-left: 6px;
 }
 
-.book-author-publisher p:last-child::after {
+.cbook-author-publisher p:last-child::after {
   content: "";
 }
 
-.book-course {
+.cbook-course {
   display: inline-block;
   background-color: #f0f0f0;
   color: #333;
@@ -146,14 +144,14 @@
   margin: 10px 0;
 }
 
-.book-comment {
+.cbook-comment {
   font-style: italic;
   font-size: 18px;
   color: #555;
   margin-top: 10px;
 }
 
-.book-intro-box {
+.cbook-intro-box {
   background-color: #f5f5f5;
   padding: 20px;
   border-radius: 10px;
@@ -163,7 +161,7 @@
   line-height: 1.6;
 }
 
-.book-intro-box {
+.cbook-intro-box {
   background-color: #f5f5f5;
   padding: 20px;
   border-radius: 10px;
@@ -173,8 +171,7 @@
   line-height: 1.6;
 }
 
-
-/* 글씨 크기 */
+/*
 h1 {
   font-size: 20px;
   margin: 0;
@@ -191,25 +188,25 @@ h2 {
   margin-top: 24px;
   margin-bottom: 16px;
 }
-
-.book-title {
+*/
+.cbook-title {
   font-size: 9pt;
   color: #333;
 }
 
-.book-author {
+.cbook-author {
   font-size: 7pt;
   color: #555;
 }
 
-.book-desc {
+.cbook-desc {
   font-size: 8pt;
   font-weight: bold;
   color: #333;
   margin-top: 2px;
 }
 
-.book-title.hanja { /* 한자의 경우, 폰트 따로 지정*/
+.cbook-title.hanja { /* 한자의 경우, 폰트 따로 지정*/
   font-family:'Apple SD Gothic Neo', 'Noto Sans CJK KR', '맑은 고딕', serif;
   font-size: 11pt;
   color: #333;

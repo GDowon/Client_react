@@ -7,9 +7,10 @@ import MainPage from './Pages/MainPage';
 import NoticePage from './Pages/NoticePage';
 import CurationPage from './Pages/CurationPage';
 import GuidePage from './Pages/GuidePage';
-import StatusPage from './Components/StatusPage';
 /*Current*/
 import CurrentBorrow from './Pages/CurrentBorrow';
+import CurrentOverdue from './Pages/CurrentOverdue';
+import CurrentReserve from './Pages/CurrentReserve';
 
 /* Login */
 import LoginPage from './Pages/Login/LoginPage';
@@ -69,55 +70,6 @@ async function fetchJSON(path, { method = 'GET', body, auth = false, headers = {
   return json;
 }
 
-/* ========================= */
-/* StatusPage용 데이터 함수  */
-/* ========================= */
-
-// 현재 대출 (GET /rentals/current/)
-const fetchBorrowData = async () => {
-  try {
-    const data = await fetchJSON('/rentals/current/', { auth: true });
-    return (Array.isArray(data) ? data : []).map((item) => ({
-      title: item.book_title ?? item.book?.title ?? item.title ?? '제목 없음',
-      info: `대출일: ${item.rental_date ?? item.borrowed_at ?? item.created_at ?? '-'}`,
-    }));
-  } catch (e) {
-    console.error('[fetchBorrowData]', e);
-    return [];
-  }
-};
-
-// 연체 (같은 응답에서 overdue 필터 가정)
-const fetchOverdueData = async () => {
-  try {
-    const data = await fetchJSON('/rentals/current/', { auth: true });
-    return (Array.isArray(data) ? data : [])
-      .filter((x) => x.overdue === true || x.status === 'overdue')
-      .map((x) => ({
-        title: x.book_title ?? x.book?.title ?? x.title ?? '제목 없음',
-        info: `반납 예정일: ${x.due_date ?? '-'}`,
-      }));
-  } catch (e) {
-    console.error('[fetchOverdueData]', e);
-    return [];
-  }
-};
-
-// 예약 (GET /reservations/?user={id})
-const fetchReserveData = async () => {
-  try {
-    const userId = localStorage.getItem('user_id');
-    const qs = userId ? `?user=${encodeURIComponent(userId)}` : '';
-    const data = await fetchJSON(`/reservations/${qs}`, { auth: true });
-    return (Array.isArray(data) ? data : []).map((x) => ({
-      title: x.book_title ?? x.book?.title ?? x.title ?? '제목 없음',
-      info: `예약 순위: ${x.queue_position ?? x.rank ?? '-'}`,
-    }));
-  } catch (e) {
-    console.error('[fetchReserveData]', e);
-    return [];
-  }
-};
 
 function App() {
   return (
@@ -127,18 +79,8 @@ function App() {
 
         {/* 현재 대출/연체/예약 */}
         <Route path="/CurrentBorrow" element={<CurrentBorrow />} />
-        <Route
-          path="/current_overdue"
-          element={
-            <>
-              <div className="top-bar">
-                <Link to="/" className="back-btn" aria-label="뒤로가기">←</Link>
-                <span className="top-tittle">현재 연체 중인 도서</span>
-              </div>
-              <StatusPage title="연체 내역" fetchData={fetchOverdueData} />
-            </>
-          }
-        />
+        <Route path="/CurrentOverdue" element={<CurrentOverdue />} />
+        <Route path="/CurrentReserve" element={<CurrentReserve/>} />
         <Route
           path="/current_reserve"
           element={
@@ -147,7 +89,7 @@ function App() {
                 <Link to="/" className="back-btn" aria-label="뒤로가기">←</Link>
                 <span className="top-tittle">현재 예약 중인 도서</span>
               </div>
-              <StatusPage title="예약 내역" fetchData={fetchReserveData} />
+              
             </>
           }
         />

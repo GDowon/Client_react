@@ -106,9 +106,8 @@ function Signup() {
         <div className="rolech">
             <select id="role" value={formData.role} onChange={handleChange} required>
             <option value="">회원구분 선택</option>
-            <option value="재학생">재학생</option> 
-            <option value="재적생">재적생</option>
-            <option value="타과생">타과생</option>
+            <option value="재학생">본전공생(편입생, 전과생 포함)</option> 
+            <option value="재적생">관련인(교직원)</option>
             </select>
         </div>
 
@@ -122,15 +121,12 @@ function Signup() {
 
         <div className="agreement">
           <label>
-            <input type="checkbox" id="agreePrivacy" checked={formData.agreePrivacy} onChange={handleChange} required /> 개인정보 수집에 동의합니다.
+            <input type="checkbox" id="agreePrivacy" checked={formData.agreePrivacy} onChange={handleChange} required /> 개인정보 수집 및 알림 수신(대출 알림 등)에 동의합니다.
           </label>
         </div>
 
         <button type="submit">회원가입</button>
       </form>
-      <p>
-        <Link to="/LoginPage">로그인 하기</Link>
-      </p>
     </div>
   );
 }

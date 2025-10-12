@@ -3,29 +3,16 @@ import { getMyPage } from '../../Api/user';
 import { Link, useNavigate } from 'react-router-dom';
 
 import '../../Css/MyPage.css'; 
-
-const HISTORY_BOOKS = [
-  { id: 1, text: "Hist1" }, { id: 2, text: "Hist2" }, { id: 3, text: "Hist3" }
-];
-
-const ALL_LOAN_BOOKS = [
-  [{ id: 1, text: "Loan1" }, { id: 2, text: "Loan2" }],
-  [{ id: 3, text: "Loan3" }, { id: 4, text: "Loan4" }],
-];
-
-const ALL_RESERVE_BOOKS = [
-  [{ id: 1, text: "Reserve1" }, { id: 2, text: "Reserve2" }],
-  [{ id: 3, text: "Reserve3" }, { id: 4, text: "Reserve4" }],
-];
-
+import logoImage from '../../Images/navigation2.png';
 
 function MyPage() {
   // 1. 상태(State) 관리
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [loanPage, setLoanPage] = useState(0);
-  const [reservePage, setReservePage] = useState(0);
+  const [borrowCount, setBorrowCount] = useState('-');
+  const [overdueCount, setOverdueCount] = useState('-');
+  const [reserveCount, setReserveCount] = useState('-');
   
   // 2. 페이지 이동을 위한 useNavigate 훅
   const navigate = useNavigate();
@@ -36,8 +23,12 @@ function MyPage() {
         const me = await getMyPage();
         if(!abort) setUser(me);
       }catch(e){
-        if(!abort) setError('정보를 불러오지 못했습니다.');
-        console.error(e);
+        if(!abort) {
+           console.error("마이페이지 정보 로드 중 오류 발생:", e);
+           if (e.response && e.response.status !== 401 && !abort) {
+                     setError('정보를 불러오지 못했습니다.');
+           }
+        }
       }finally{
         if(!abort) setLoading(false);
       }
@@ -45,23 +36,57 @@ function MyPage() {
     return () => { abort = true; };
   }, []);
 
-  if (loading) return <div className="container">불러오는 중…</div>;
-  if (error) return <div className="container" role="alert">{error}</div>;
+  useEffect(() => {
+        // localStorage에서 값을 읽어와 숫자로 변환합니다. 없으면 '-'로 유지됩니다.
+        const storedBorrow = localStorage.getItem('borrowCount');
+        const storedOverdue = localStorage.getItem('overdueCount');
+        const storedReserve = localStorage.getItem('reserveCount');
 
+        setBorrowCount(storedBorrow ? parseInt(storedBorrow, 10) : '-');
+        setOverdueCount(storedOverdue ? parseInt(storedOverdue, 10) : '-');
+        setReserveCount(storedReserve ? parseInt(storedReserve, 10) : '-');
+    }, []);
 
-  // 3. 이벤트 핸들러 함수들
-  const handleNextLoanBooks = () => {
-    setLoanPage((currentPage) => (currentPage + 1) % ALL_LOAN_BOOKS.length);
-  };
+   if (loading) return <div className="container">불러오는 중…</div>;
+    // 일반적인 API 오류가 발생했고, 로그인 유무와 관계없이 페이지 표시 불가일 경우
+    if (error) return <div className="container" role="alert">{error}</div>;
 
-  const handleNextReserveBooks = () => {
-    setReservePage((currentPage) => (currentPage + 1) % ALL_RESERVE_BOOKS.length);
-  };
+    // ** 로그인 되지 않은 상태일 경우 **
+    if (!user) {
+        return (
+            <div>
+                <div className="top-bar">
+                    <Link to="/" className="back-btn" aria-label="뒤로가기">←</Link>
+                    <span className="top-tittle">마이페이지</span>
+                </div>
+                <Link to="/"><img src={logoImage} alt="로고" className="logo" /></Link>
 
-  // 현재 페이지에 해당하는 대출/예약 도서 목록
-  const currentLoanBooks = ALL_LOAN_BOOKS[loanPage];
-  const currentReserveBooks = ALL_RESERVE_BOOKS[reservePage];
-
+                <div className="container" style={{ padding: '20px', textAlign: 'center' }}>
+                    <p style={{ fontSize: '1.2em', fontWeight: 'bold', marginBottom: '15px' }}>
+                        로그인이 필요한 서비스입니다.
+                    </p>
+                    <p style={{ marginBottom: '15px', color: '#666' }}>
+                        내 정보 확인 및 대출/예약 서비스를 이용하려면 로그인 해주세요.
+                    </p>
+                    <button 
+                        onClick={() => navigate('/LoginPage')} 
+                        style={{ 
+                            padding: '10px 20px', 
+                            backgroundColor: '#0095ff', 
+                            color: 'white', 
+                            border: 'none', 
+                            borderRadius: '5px', 
+                            cursor: 'pointer' 
+                        }}
+                    >
+                        로그인 하러 가기
+                    </button>
+                </div>
+            </div>
+        );
+    }
+    
+    // ** 로그인 된 상태일 경우 **
   return (
     <div>
       <div className="top-bar">
@@ -79,43 +104,13 @@ function MyPage() {
         <div>아이디: {user?.id}</div>
         <div>전화번호: {user?.phone}</div>
       </div>
-
-      <hr />
-
-      <div className="section-box">
-        <div className="section-title">나의 히스토리 (최근 3건)</div>
-        <div className="book-list">
-          {HISTORY_BOOKS.map(book => (
-            <img key={book.id} src={`https://via.placeholder.com/80x120?text=${book.text}`} alt={book.text} />
-          ))}
-        </div>
-      </div>
-
-      <div className="loan-reserve-row">
-        <div className="loan">
-          <div className="section-title" onClick={() => navigate('/Current')}>대출장서</div>
-          <div className="book-list" id="loanBooks">
-            {currentLoanBooks.map(book => (
-              <img key={book.id} src={`https://via.placeholder.com/80x120?text=${book.text}`} alt={book.text} />
-            ))}
-          </div>
-          <div className="arrow" onClick={handleNextLoanBooks}>›</div>
-        </div>
-        <div className="reserve">
-          <div className="section-title" onClick={() => navigate('/reserve-detail')}>예약장서</div>
-          <div className="book-list" id="reserveBooks">
-            {currentReserveBooks.map(book => (
-              <img key={book.id} src={`https://via.placeholder.com/80x120?text=${book.text}`} alt={book.text} />
-            ))}
-          </div>
-          <div className="arrow" onClick={handleNextReserveBooks}>›</div>
-        </div>
-      </div>
       
       <div className="nav-block">
-        <div className="nav-link" onClick={() => navigate('/interest')}>
+        {/*
+        <div className="nav-link" onClick={() => navigate('/Interest')}>
           관심 도서 <span>›</span>
         </div>
+        */}
         <a
             href="https://forms.gle/bM5gdDtrqMD6v3kj9" 
             className="nav-link"
@@ -125,7 +120,42 @@ function MyPage() {
           희망도서신청 <span>›</span>
         </a>
         <div className="nav-link" onClick={() => navigate('/MyReviewsPage')}>
-          도서리뷰 <span>›</span>
+          내가 쓴 리뷰 <span>›</span>
+        </div>
+         <a
+            href="http://pf.kakao.com/_pHxbDn"  
+            className="nav-link"
+            target="_blank" 
+            rel="noopener noreferrer"
+        >
+          오류 문의 <span>›</span>
+        </a>
+        <div className="nav-link" onClick={() => navigate('/CurrentBorrow')}>
+          <span style={{ display: 'inline-flex', alignItems: 'center' }}>
+            대출도서
+            <span className="count-badge" style={{ marginLeft: 0 }}>
+              {borrowCount}
+            </span>
+          </span>
+          <span>›</span>
+        </div>
+        <div className="nav-link" onClick={() => navigate('/CurrentReserve')}>
+          <span style={{ display: 'inline-flex', alignItems: 'center' }}>
+            예약도서
+            <span className="count-badge" style={{ marginLeft: 0 }}>
+              {reserveCount}
+            </span>
+          </span>
+          <span>›</span>
+        </div>
+        <div className="nav-link" onClick={() => navigate('/CurrentOverrdue')}>
+          <span style={{ display: 'inline-flex', alignItems: 'center' }}>
+            연체도서
+            <span className="count-badge" style={{ marginLeft: 0 }}>
+              {overdueCount}
+            </span>
+          </span>
+          <span>›</span>
         </div>
       </div>
       <hr />

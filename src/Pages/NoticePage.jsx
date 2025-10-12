@@ -3,28 +3,20 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../Css/NoticePage.css'; 
+import info1 from '../Images/info1.png';
+import info2 from '../Images/info2.png';
+import info3 from '../Images/info3.png';
+import info4 from '../Images/info4.png';
+import info5 from '../Images/info5.png';
 
-// 가상의 게시글 데이터입니다. 실제로는 서버 API를 통해 가져와야 합니다.
 const initialPosts = [
   {
     id: 1,
-    title: "<필독> 문중문고 FAQ",
-    content: "이것은 FAQ 내용입니다. 여기에 더 많은 정보가 들어갑니다.",
-    date: "2025-05-01",
-    isPinned: true
-  },
-  {
-    id: 2,
-    title: "문중문고 5월 이용 관련 공지",
-    content: "5월 이용 관련 공지 내용입니다. 변경된 이용 시간이 포함됩니다.",
-    date: "2025-05-03"
-  },
-  {
-    id: 3,
-    title: "문중문고 신설",
-    content: "문중문고 신설 관련 내용입니다. 새로운 도서관 시설에 대한 설명입니다.",
-    date: "2025-04-25"
-  },
+    title: "문중문고 개관안내 (클릭)",
+    content: [info1, info2, info3, info4, info5],
+    date: "2025-10-13",
+    isPinned: 'True'
+  }
 ];
 
 function NoticePage() {
@@ -69,7 +61,18 @@ function NoticePage() {
                 // openPostId 상태에 따라 내용이 보이거나 숨겨집니다.
                 style={{ display: openPostId === post.id ? 'block' : 'none' }}
               >
-                <p>{post.content}</p>
+                {Array.isArray(post.content) ? (
+                  post.content.map((imageSrc, index) => (
+                    <img 
+                      key={index} 
+                      src={imageSrc} 
+                      alt={`정보 이미지 ${index + 1}`} 
+                      style={{ maxWidth: '100%', height: 'auto', marginBottom: '10px' }} // 이미지 스타일
+                    />
+                  ))
+                ) : (
+                  <p>{post.content}</p>
+                )}
                 <p><strong>작성일:</strong> {post.date}</p>
               </div>
             </div>

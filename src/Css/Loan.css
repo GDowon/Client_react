@@ -1,8 +1,8 @@
 
 
-.section {
-  flex: 1;
+.lsection {
   display: flex;
+  height: 40vh;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -16,7 +16,7 @@
   transition: background 0.3s ease;
 }
 
-.section:hover {
+.lsection:hover {
   background: #E3F2FD;
 }
 

@@ -8,8 +8,8 @@ export const API_BASE_URL = 'http://localhost:8000';
 export const BASE_URL = 'https://mungo.p-e.kr';
 
 // Key names for storing authentication tokens in localStorage
-export const ACCESS_TOKEN_KEY = 'access_token';
-export const REFRESH_TOKEN_KEY = 'refresh_token';
+export const ACCESS_TOKEN_KEY = 'accessToken';
+export const REFRESH_TOKEN_KEY = 'refreshToken';
 
 // Default timeout for API requests (in milliseconds)
 export const API_TIMEOUT_MS = 10000;

@@ -9,9 +9,7 @@ const BASE = 'https://mungo.p-e.kr';
 /** ✅ access token 추출 함수 (여러 키명 대응) */
 const getAuthHeaders = () => {
   const token =
-    localStorage.getItem('access_token') ||
-    localStorage.getItem('accessToken') ||
-    localStorage.getItem('access');
+    localStorage.getItem('accessToken');
 
   if (!token) {
     console.warn('[getAuthHeaders] access token을 찾을 수 없습니다.');
@@ -184,7 +182,7 @@ export default function BookPage() {
             details: toText(d?.details),
             notes: toText(d?.notes),
             coverUrl: d?.image_url || '',
-            code: d?.book_code || d?.code || '', // ✅ 추가
+            code: d?.book_code || d?.code || '', 
           });
 
 
@@ -197,7 +195,7 @@ export default function BookPage() {
       }
 
       try {
-        const data = await fetchJSON(`/reviews/?book=${pk}`, {
+        const data = await fetchJSON(`/reviews/?bookId=${pk}`, {
           auth: false,
           timeoutMs: 8000,
         });
@@ -206,7 +204,7 @@ export default function BookPage() {
         const list = (Array.isArray(data) ? data : data?.results ?? []).map(
           (r, idx) => ({
             id: r.id ?? idx,
-            author: r.author ?? r.username ?? '익명',
+            author: r.user_username ?? r.author ?? r.username ?? '익명', 
             date: r.date
               ? r.date.replaceAll('-', '/')
               : (r.created_at || '').slice(0, 10).replaceAll('-', '/'),
@@ -258,13 +256,13 @@ export default function BookPage() {
 
     try {
       await fetchJSON(`/reviews/`, { method: 'POST', auth: true, body: { book: pk, content } });
-      const listData = await fetchJSON(`/reviews/?book=${pk}`, { auth: false });
+      const listData = await fetchJSON(`/reviews/?bookId=${pk}`, { auth: false });
       const normalized = (Array.isArray(listData)
         ? listData
         : listData?.results || []
       ).map((r, idx) => ({
         id: r.id ?? idx,
-        author: r.author ?? r.username ?? '익명',
+        author: r.user_username ?? r.author ?? r.username ?? '익명', 
         date: r.date
           ? r.date.replaceAll('-', '/')
           : (r.created_at || '').slice(0, 10).replaceAll('-', '/'),
@@ -378,23 +376,24 @@ const handleRent = async () => {
                 <p><strong>장서상태:</strong> <span className={`status-${bookData.status}`}>{bookData.status}</span></p>
                 <p><strong>총서정보:</strong> <span>{bookData.series}</span></p>
                 <p><strong>상세정보:</strong> <span>{bookData.details}</span></p>
-                <p><strong>주기:</strong> <span>{bookData.notes}</span></p>
+                
               </div>
             </div>
 
-            <div className="buttons-row">
-              <div className="button" onClick={handleRent}>대출</div>
-              <div className="button" onClick={handleReserve}>예약</div>
-              <div className="button" id="likeButton" onClick={handleLikeToggle}>
-                <span className="heart-icon">{isLiked ? '❤️' : '🤍'}</span> 관심
+            <div className="bbuttons-row">
+              <div className="bbutton" onClick={handleRent}>대출</div>
+              <div className="bbutton" onClick={handleReserve}>예약</div>
+              <div className="heartspqce">
+              <div className="bbutton" id="likeButton" onClick={handleLikeToggle}>
+                <span className="heart-icon">{isLiked ? '❤️' : '🤍'}</span>관심
+              </div>
               </div>
             </div>
           </div>
 
           <div className="subject-tags">
             <h3>상세 장서 정보</h3>
-            <p>소설 / 시 / 희곡 &gt; 영어소설</p>
-            <p>고전 &gt; ~~~ &gt; ~~~ </p>
+            <p><strong>주기:</strong> <span>{bookData.notes}</span></p>
           </div>
 
           <div className="review">

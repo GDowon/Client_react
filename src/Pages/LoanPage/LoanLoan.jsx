@@ -1,104 +1,69 @@
-// src/Pages/LoanLoan.jsx
-
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import {submitLoanRequest} from '../../Api/loan.js';
 import '../../Css/Loan.css';
 import logoImage from '../../Images/navigation2.png';
 import LoanForm from '../../Components/LoanForm';
 
-// 백엔드 API 통신에 필요한 함수와 URL 정의
-const BASE_URL = 'https://mungo.p-e.kr';
-const getAuthHeaders = () => {
-  const token = localStorage.getItem('access_token');
-  return token ? { Authorization: `Bearer ${token}` } : {};
-};
-async function fetchJSON(
-    path,
-    { method = 'GET', body, auth = false, headers = {}, timeoutMs = 8000 } = {}
-) {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort('timeout'), timeoutMs);
 
-    const baseHeaders = {
-        Accept: 'application/json',
-        ...(auth ? getAuthHeaders() : {}),
-        ...headers,
+const CustomModal = ({ isOpen, message, onClose, onConfirm }) => {
+    if (!isOpen) return null;
+    const isSuccess = message.startsWith('✅'); 
+    // 성공 시 반납일 계산 (오늘 날짜 + 7일)
+    const getReturnDate = () => {
+        const today = new Date();
+        today.setDate(today.getDate() + 7);
+        return today.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
     };
-    if (method !== 'GET' || body != null) {
-        baseHeaders['Content-Type'] = 'application/json';
-    }
+  const displayMessage = isSuccess
+        ? (
+            <>
+                <p style={{ fontWeight: 'bold' }}>대출되었습니다.</p>
+                <p style={{ marginTop: '10px' }}>반납일: {getReturnDate()}</p>
+            </>
+        )
+        : <p>{message.replace('❌', '')}</p>; // 에러 메시지에서 ❌ 기호 제거
 
-    let res;
-    try {
-        res = await fetch(`${BASE_URL}${path}`, {
-            method,
-            headers: baseHeaders,
-            body: body ? JSON.stringify(body) : undefined,
-            signal: controller.signal,
-        });
-    } finally {
-        clearTimeout(timer);
-    }
+    return (
+        <div className={`loan-modal ${isOpen ? 'open' : ''}`} id="loan-modal">
+            <div className="modal-content">
+                {displayMessage}
+                <div className="popup-buttons">
+                    {isSuccess ? (
+                        <>
+                            <button className="popup-btn" onClick={onClose}>더 대출하기</button>
+                            <button className="popup-btn primary" onClick={onConfirm}>메인페이지 가기</button>
+                        </>
+                    ) : (
+                        <button className="popup-btn" onClick={onClose}>확인</button>
+                    )}
+                </div>
+            </div>
+            <div className="modal-overlay" onClick={onClose}></div>
+        </div>
+    );
+};
 
-    const ct = res.headers.get('content-type') || '';
-    const text = await res.text();
-
-    if (!ct.includes('application/json')) {
-        throw new Error(
-            `Expected JSON but got ${ct} ${res.status} at ${res.url}. Body: ${text.slice(0, 120)}`
-        );
-    }
-
-    const json = text ? JSON.parse(text) : null;
-    if (!res.ok) {
-        const msg = json?.detail || json?.message || `HTTP ${res.status}`;
-        const err = new Error(msg);
-        err.status = res.status;
-        err.payload = json;
-        throw err;
-    }
-    return json;
-}
 
 function LoanLoan() {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [popupMessage, setPopupMessage] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const [modalMessage, setModalMessage] = useState('');
   const navigate = useNavigate();
-
-  // 모달을 열고 메시지를 설정하는 함수
   const openModal = (msg) => {
-    setPopupMessage(msg);
-    setIsPopupOpen(true);
+    setModalMessage(msg);
+    setIsModalOpen(true);
   };
-  
-  // "대출"에 특화된 제출 로직 (백엔드 요청 포함)
-  const handleLoanSubmit = async (bookId) => {
-    console.log("대출할 도서 등록번호:", bookId);
-    
-    try {
-        // 대출 요청 API 호출
-        const response = await fetchJSON(`/rentals/`, { 
-            method: 'POST', 
-            auth: true, 
-            body: { code: bookId } 
-        });
 
-        openModal('대출이 완료되었습니다.');
+
+  // "대출"에 특화된 제출 로직 (백엔드 요청 포함)
+    const handleLoanSubmit = async (bookId) => {
+    try {
+      await submitLoanRequest(bookId);
+
+        openModal('대출되었습니다');
     } catch (err) {
-        console.error('[RENT] fail:', err);
-        
-        let errorMessage = '대출 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
-        
-        // 백엔드 응답에 "message" 필드가 있는 경우
-        if (err.payload && Array.isArray(err.payload.message)) {
-            // "message" 배열의 첫 번째 항목을 사용
-            errorMessage = err.payload.message[0];
-        } else if (err.message === 'HTTP 400') {
-            // 일반적인 HTTP 400 오류 메시지
-            errorMessage = '요청이 올바르지 않습니다. 도서 정보를 확인해주세요.';
-        }
-        
-        openModal(errorMessage);
+        openModal(err.message); 
+        console.error('[LoanLoan] Error caught in UI:', err.message);
     }
   };
 
@@ -125,17 +90,13 @@ function LoanLoan() {
         caption={loanCaption}
       />
       
-      {/* 팝업창을 항상 렌더링하고, CSS 클래스로 표시/숨기기를 제어 */}
-      <div id="loan-success-popup" className={`popup-main ${isPopupOpen ? 'is-active' : ''}`}>
-        <div className="popup-content">
-          <p>{popupMessage}</p>
-          <div className="popup-buttons">
-            <button className="popup-btn" onClick={() => window.location.reload()}>더 대출하기</button>
-            <button className="popup-btn" onClick={() => navigate('/mypage')}>대출 정보 확인</button>
-          </div>
+       <CustomModal
+        isOpen={isModalOpen}
+        message={modalMessage}
+        onClose={() => {setIsModalOpen(false);}}
+        onConfirm={() => navigate('/')} // 확인 버튼: 마이페이지로 이동
+        />
         </div>
-      </div>
-    </div>
   );
 }
 
