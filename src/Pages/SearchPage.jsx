@@ -1,5 +1,5 @@
 // src/Pages/SearchPage.jsx
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import "../Css/SearchPage.css";
 
@@ -55,8 +55,7 @@ async function withRefreshRetry(requestFn) {
 
 // 검색 (A안: /books/?query=, 404/405면 B안: /search/?q=)
 async function searchBooksAPI(query, page = 1) {
-  const timestamp = Date.now();
-  const queryParams = `search=${encodeURIComponent(query)}&page=${page}&_t=${timestamp}`;
+  // const queryParams = `search=${encodeURIComponent(query)}&page=${page}&_t=${timestamp}`;
 
   const callA = () =>
     fetch(`/books/?search=${encodeURIComponent(query)}&page=${page}`, {
@@ -333,7 +332,7 @@ async function submitReserveRequest(bookId) {
         });
     };
 // 🌟🌟🌟 ConfirmModal 컴포넌트 정의 🌟🌟🌟
-const ConfirmModal_loan = ({ isOpen, message, onConfirm, onCancel }) => {
+const confirmModal_loan = ({ isOpen, message, onConfirm, onCancel }) => {
     if (!isOpen) return null;
 
     return (
@@ -377,7 +376,7 @@ const ConfirmModal_loan = ({ isOpen, message, onConfirm, onCancel }) => {
     );
 };
 
-const ConfirmModal_re = ({ isOpen, message, onConfirm, onCancel }) => {
+const ConfirmModalRe = ({ isOpen, message, onConfirm, onCancel }) => {
     if (!isOpen) return null;
 
     return (
@@ -433,7 +432,7 @@ const ConfirmModal_re = ({ isOpen, message, onConfirm, onCancel }) => {
   };
   
   // 성공 후 메인페이지 이동
-  const confirmModal_loan = () => {
+  const ConfirmModalLoan = () => {
       setIsModalOpen(false);
       navigate('/');
   };
@@ -611,14 +610,14 @@ const navigateToLogin = () => {
       )}
 
       <Footer />
-      <ConfirmModal_loan
+      <ConfirmModalLoan
           isOpen={confirmLoanState.isOpen}
           message={confirmLoanState.book ? `[${confirmLoanState.book.code}] ${confirmLoanState.book.title}` : '도서 정보를 확인할 수 없습니다.'}
           onConfirm={executeLoan} 
           onCancel={closeConfirmModal}
       />
       {/* 🌟🌟🌟 수정 7: 예약 확인 모달 렌더링 (예약용) 🌟🌟🌟 */}
-      <ConfirmModal_re
+      <ConfirmModalRe
           isOpen={confirmReserveState.isOpen}
           message={confirmReserveState.book ? `[${confirmReserveState.book.code}] ${confirmReserveState.book.title}` : '도서 정보를 확인할 수 없습니다.'}
           onConfirm={executeReserve} // 예약 실행 로직 연결

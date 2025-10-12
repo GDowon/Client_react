@@ -4,13 +4,6 @@ import React from 'react';
 // CustomModal은 어디서든 사용될 수 있으므로, navigate를 사용하지 않도록 수정합니다.
 // onConfirm, onClose 콜백 함수를 통해 상위 컴포넌트에 액션을 위임합니다.
 
-// 성공 시 반납일 계산 유틸리티 함수
-const getReturnDate = () => {
-    const today = new Date();
-    today.setDate(today.getDate() + 7);
-    return today.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/ /g, '');
-};
-
 const CustomModal = ({ isOpen, message, onClose, onConfirm }) => {
     if (!isOpen) return null;
     

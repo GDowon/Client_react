@@ -145,14 +145,12 @@ function MainPage() {
     };
 
   // 공지, 큐레이션, 소개, 이용안내에 들어갈 더미 데이터 (임시로 생성)
+  /*
   const noticePosts = [
     { title: '문중문고 개관', date: '25-10-14' },
-  ];
+  ];*/
   const curationPosts = [
     { title: '25-10-31 업데이트 예정입니다.', date: '25-10-14' }
-  ];
-  const introPosts = [
-    { title: '제목입니다.', date: '24-01-20' },
   ];
   const guidePosts = [
     { title: '문중문고 이용안내', date: '25-10-14' },

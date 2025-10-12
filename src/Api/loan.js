@@ -28,19 +28,19 @@ export async function submitLoanRequest(bookId) {
     if (err.payload) {
         if (Array.isArray(err.payload.message)) {
             // 예: "대출 한도를 초과했습니다."
-            errorMessage = '❌ ' + err.payload.message[0];
+             errorMessage = `❌ ${err.payload.message[0]}`;
         } else if (err.payload.detail) {
             // 예: "인증 실패" (fetchJSON 내부에서 detail 필드를 throw 했을 경우)
-            errorMessage = '❌ ' + err.payload.detail; 
+            errorMessage = `❌ ${err.payload.detail}`; 
         } else if (err.payload.message) {
-            errorMessage = '❌ ' + err.payload.message;
+            errorMessage = `❌ ${err.payload.message}`;
         }
     } else if (err.message) {
         // fetchJSON에서 발생시킨 timeout 등의 기본 에러 메시지
-        errorMessage = '❌ ' + err.message; 
+        errorMessage = `❌ ${err.message}`; 
     } else if (err.status) {
         // 기타 HTTP 에러 처리
-        errorMessage = '❌ ' + `HTTP ${err.status} 오류가 발생했습니다.`;
+        errorMessage = `❌ HTTP ${err.status} 오류가 발생했습니다.`;
     }
 
     // 3. 통일된 에러 메시지를 담아 새로운 Error를 throw 합니다.

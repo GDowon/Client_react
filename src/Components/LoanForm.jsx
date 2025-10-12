@@ -1,6 +1,4 @@
-// src/Components/RegisterInputForm.jsx
-
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const PREFIX = 'MJ';
 

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../../Css/MyPage.css';
 import { getMyPage, updateMyPage } from '../../Api/user';
 
 export default function EditProfilePage() {
-  const nav = useNavigate();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 

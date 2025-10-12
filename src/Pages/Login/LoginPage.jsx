@@ -3,67 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../../Css/loginstyle.css';
 import logoImage from '../../Images/navigation2.png';
 
-
-const BASE_URL = 'https://mungo.p-e.kr';
-
-const getAuthHeaders = (token) => {
-    return {
-        'Content-Type': 'application/json',
-        // 토큰이 있을 경우에만 Authorization 헤더 포함
-        ...(token ? { Authorization: `Bearer ${token}` } : {}), 
-    };
-};
-
-// 범용 fetch 함수 (인증 토큰을 사용하여 API 호출)
-const fetchApi = async (path, token) => {
-    try {
-        const response = await fetch(`${BASE_URL}${path}`, {
-            headers: getAuthHeaders(token),
-        });
-
-        if (response.ok) {
-            return await response.json();
-        }
-        // 오류 응답일 경우 null 반환 (fetchAndSaveCounts에서 처리)
-        return null; 
-    } catch (error) {
-        console.error(`[API 통신 오류] ${path}:`, error);
-        return null;
-    }
-};
-
-// 🌟🌟🌟 카운트 정보를 가져와 저장하는 핵심 함수 🌟🌟🌟
-const fetchAndSaveCounts = async (token) => {
-    if (!token) return;
-
-    // 1. 대출 및 연체 목록 가져오기
-    const rentals = await fetchApi('/rentals/current/', token);
-    
-    if (rentals && Array.isArray(rentals)) {
-        const nonOverdueCount = rentals.filter(item => !item.is_overdue).length;
-        const overdueCount = rentals.filter(item => item.is_overdue).length;
-
-        localStorage.setItem('borrowCount', nonOverdueCount.toString());
-        localStorage.setItem('overdueCount', overdueCount.toString());
-    } else {
-        localStorage.setItem('borrowCount', '0');
-        localStorage.setItem('overdueCount', '0');
-    }
-
-    // 2. 예약 목록 가져오기
-    const reservations = await fetchApi('/reservations/', token);
-    
-    if (reservations && Array.isArray(reservations)) {
-        const activeReserveCount = reservations.filter(item => item.status === 'ACTIVE').length;
-        
-        localStorage.setItem('reserveCount', activeReserveCount.toString());
-    } else {
-        localStorage.setItem('reserveCount', '0');
-    }
-    
-    console.log('✅ 대출/연체/예약 카운트가 localStorage에 저장되었습니다.');
-};
-
 function LoginPage() {
 
   const [loginId, setLoginId] = useState('');

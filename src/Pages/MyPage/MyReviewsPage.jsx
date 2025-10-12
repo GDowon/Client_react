@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'; // useCallback 추가
-import { Link, useNavigate } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import '../../Css/MyPage.css';
 
 // ----------------------------------------------------
@@ -112,7 +112,6 @@ const EditModal = ({ isOpen, currentContent, onSave, onCancel, title }) => {
 
 
 function MyReviewsPage() {
-    const navigate = useNavigate();
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -161,12 +160,6 @@ function MyReviewsPage() {
         setLoading(true); // 로딩 표시 시작
 
         try {
-            // 2. API 호출: PATCH /reviews/{review_id}/
-            const response = await fetchJSON(`/reviews/${reviewId}/`, {
-                method: 'PATCH',
-                body: { content: newContent }, // 수정된 내용 전송
-                auth: true
-            });
 
             // 3. 목록 즉시 갱신 (낙관적 업데이트 또는 전체 재로드)
             setReviews(prev => prev.map(r => 
