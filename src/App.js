@@ -3,34 +3,34 @@ import './Css/font.css';
 import './Css/toolkit.css';
 
 /* MainPage */
-import MainPage from './Pages/MainPage';
-import NoticePage from './Pages/NoticePage';
-import CurationPage from './Pages/CurationPage';
-import GuidePage from './Pages/GuidePage';
+import MainPage from './Pages/MainPage.jsx';
+import NoticePage from './Pages/NoticePage.jsx';
+import CurationPage from './Pages/CurationPage.jsx';
+import GuidePage from './Pages/GuidePage.jsx';
 /*Current*/
-import CurrentBorrow from './Pages/CurrentBorrow';
-import CurrentOverdue from './Pages/CurrentOverdue';
-import CurrentReserve from './Pages/CurrentReserve';
+import CurrentBorrow from './Pages/CurrentBorrow.jsx';
+import CurrentOverdue from './Pages/CurrentOverdue.jsx';
+import CurrentReserve from './Pages/CurrentReserve.jsx';
 
 /* Login */
-import LoginPage from './Pages/Login/LoginPage';
-import ResetPassword from './Pages/Login/ResetPassword';
-import FindId from './Pages/Login/FindId';
-import SignUp from './Pages/Login/SignUp';
+import LoginPage from './Pages/Login/LoginPage.jsx';
+import ResetPassword from './Pages/Login/ResetPassword.jsx';
+import FindId from './Pages/Login/FindId.jsx';
+import SignUp from './Pages/Login/SignUp.jsx';
 
 /* Search */
-import SearchPage from './Pages/SearchPage';
-import BookPage from './Pages/BookPage';
+import SearchPage from './Pages/SearchPage.jsx';
+import BookPage from './Pages/BookPage.jsx';
 
 /* MyPage */
-import MyPage from './Pages/MyPage/MyPage';
-import MyReviewsPage from './Pages/MyPage/MyReviewsPage';
-import EditProfilePage from './Pages/MyPage/EditProfilePage';
+import MyPage from './Pages/MyPage/MyPage.jsx';
+import MyReviewsPage from './Pages/MyPage/MyReviewsPage.jsx';
+import EditProfilePage from './Pages/MyPage/EditProfilePage.jsx';
 
 /* Loan */
-import LoanChoice from './Pages/LoanPage/LoanChoice';
-import LoanLoan from './Pages/LoanPage/LoanLoan';
-import LoanReturn from './Pages/LoanPage/LoanReturn';
+import LoanChoice from './Pages/LoanPage/LoanChoice.jsx';
+import LoanLoan from './Pages/LoanPage/LoanLoan.jsx';
+import LoanReturn from './Pages/LoanPage/LoanReturn.jsx';
 
 /* ===================== */
 /* Fetch helpers (공통)  */
