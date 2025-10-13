@@ -101,7 +101,7 @@ function MyPage() {
           </div>
           <div className="settings-btn" onClick={() => navigate('/EditProfilePage')}>⚙️</div>
         </div>
-        <div>아이디: {user?.id}</div>
+        <div>아이디: {user?.username}</div>
         <div>전화번호: {user?.phone}</div>
       </div>
       
