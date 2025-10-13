@@ -3,13 +3,15 @@ import { useNavigate, Link } from 'react-router-dom';
 import '../Css/SearchPage.css';
 import printnull from '../Images/printnull.png'; 
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 // API 통신을 위한 헬퍼 함수 (기존 코드 유지)
 const fetchCurrentRentals = async () => {
   const token = localStorage.getItem('accessToken');
   if (!token) return [];
 
   try {
-    const response = await fetch('/rentals/current/', {
+    const response = await fetch(`${API_BASE_URL}/rentals/current/`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,

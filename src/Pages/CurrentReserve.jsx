@@ -7,6 +7,7 @@ import { ConfirmModal } from '../Components/ConfirmModal';
 
 import printnull from '../Images/printnull.png'; 
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const authHeaders = () => {
     const a = localStorage.getItem("accessToken");
@@ -22,7 +23,7 @@ const fetchReservations = async () => {
   if (!token) return [];
 
   try {
-    const response = await fetch('/reservations/', {
+    const response = await fetch(`${API_BASE_URL}/reservations/`, {
       headers: authHeaders(), // 🌟 authHeaders 사용하도록 수정 🌟
     });
 
@@ -39,7 +40,7 @@ const fetchReservations = async () => {
 };
 
 const cancelReservationAPI = async (reservationId) => {
-    const response = await fetch(`/reservations/${reservationId}/cancel/`, {
+    const response = await fetch(`${API_BASE_URL}/reservations/${reservationId}/cancel/`, {
         method: 'POST',
         headers: authHeaders(),
     });

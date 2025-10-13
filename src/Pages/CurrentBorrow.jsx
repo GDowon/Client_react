@@ -5,13 +5,15 @@ import { ConfirmModal } from '../Components/ConfirmModal';
 import { CancelSuccessModal } from '../Components/CancelModal';
 import printnull from '../Images/printnull.png'; 
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 // API 통신을 위한 헬퍼 함수 (기존 코드 유지)
 const fetchCurrentRentals = async () => {
   const token = localStorage.getItem('accessToken');
   if (!token) return [];
 
   try {
-    const response = await fetch('/rentals/current/', {
+    const response = await fetch(`${API_BASE_URL}/rentals/current/`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
@@ -34,7 +36,7 @@ const returnBookAPI = async (rentalId) => {
   if (!token) throw new Error('인증 토큰이 없습니다.');
 
   // PATCH 요청 사용 (부분 업데이트)
-  const response = await fetch(`/rentals/${rentalId}/`, {
+  const response = await fetch(`${API_BASE_URL}/rentals/${rentalId}/`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',

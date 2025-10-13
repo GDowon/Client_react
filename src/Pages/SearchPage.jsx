@@ -14,12 +14,9 @@ import red_hearts from "../Images/red_hearts.png";
 import blank_hearts from "../Images/blank_hearts.png";
 import printnull from '../Images/printnull.png'; 
 
-/** =========================================================
- *  이 파일 안에서 바로 API 연동 (axios 없이 fetch 사용)
- *  - CRA 개발환경: package.json 의 "proxy": "https://mungo.p-e.kr"
- *  - 상대 경로로 호출: /books/, /likes/toggle/ 등
- *  - 401 시 한 번 refresh -> 재시도
- * ========================================================= */
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+
 const authHeaders = () => {
   const a = localStorage.getItem("accessToken");
   return {
@@ -40,7 +37,7 @@ async function withRefreshRetry(requestFn) {
   const refresh = localStorage.getItem("refreshToken");
   if (!refresh) return res;
 
-  const r = await fetch("/users/token/refresh/", {
+  const r = await fetch(`${API_BASE_URL}/users/token/refresh/`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ refresh }),
@@ -58,14 +55,14 @@ async function searchBooksAPI(query, page = 1) {
   // const queryParams = `search=${encodeURIComponent(query)}&page=${page}&_t=${timestamp}`;
 
   const callA = () =>
-    fetch(`/books/?search=${encodeURIComponent(query)}&page=${page}`, {
+    fetch(`${API_BASE_URL}/books/?search=${encodeURIComponent(query)}&page=${page}`, {
       headers: authHeaders(),
     });
 
   let res = await withRefreshRetry(callA);
   if (!res.ok && (res.status === 404 || res.status === 405)) {
     const callB = () =>
-      fetch(`/search/?q=${encodeURIComponent(query)}&page=${page}`, {
+      fetch(`${API_BASE_URL}/search/?q=${encodeURIComponent(query)}&page=${page}`, {
         headers: authHeaders(),
       });
     res = await withRefreshRetry(callB);
@@ -97,7 +94,7 @@ async function searchBooksAPI(query, page = 1) {
 // 좋아요 토글 (A안: POST /books/:id/like/, 실패 시 B안: POST /likes/toggle/)
 async function toggleLikeAPI(bookId, like) {
   const callA = () =>
-    fetch(`/books/${bookId}/like/`, {
+    fetch(`${API_BASE_URL}/books/${bookId}/like/`, {
       method: "POST",
       headers: authHeaders(),
       body: JSON.stringify({ like }),
@@ -106,7 +103,7 @@ async function toggleLikeAPI(bookId, like) {
   let res = await withRefreshRetry(callA);
   if (!res.ok && (res.status === 404 || res.status === 405)) {
     const callB = () =>
-      fetch(`/likes/toggle/`, {
+      fetch(`${API_BASE_URL}/likes/toggle/`, {
         method: "POST",
         headers: authHeaders(),
         body: JSON.stringify({ book_id: bookId, like }),
@@ -230,7 +227,7 @@ const executeLoan = async () => {
 
 async function submitReserveRequest(bookId) {
     try {
-        const response = await fetch(`/books/${bookId}/reserve/`, { 
+        const response = await fetch(`${API_BASE_URL}/books/${bookId}/reserve/`, { 
             method: 'POST', 
             headers: authHeaders(),
         });
