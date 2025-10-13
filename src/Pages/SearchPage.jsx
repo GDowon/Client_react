@@ -428,15 +428,10 @@ const ConfirmModalRe = ({ isOpen, message, onConfirm, onCancel }) => {
     setIsModalOpen(false);
   };
   
-  // 성공 후 메인페이지 이동
-  const ConfirmModalLoan = () => {
-      setIsModalOpen(false);
-      navigate('/');
-  };
 
 const navigateToLogin = () => {
         setIsLoginModalOpen(false);
-        navigate('/LoginPage'); // 실제 로그인 페이지 경로로 수정하세요
+        navigate('/LoginPage');
     };
 
   // 정렬
@@ -607,7 +602,7 @@ const navigateToLogin = () => {
       )}
 
       <Footer />
-      <ConfirmModalLoan
+      <handleLoanSuccessNavigation 
           isOpen={confirmLoanState.isOpen}
           message={confirmLoanState.book ? `[${confirmLoanState.book.code}] ${confirmLoanState.book.title}` : '도서 정보를 확인할 수 없습니다.'}
           onConfirm={executeLoan} 

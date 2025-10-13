@@ -11,11 +11,15 @@ import '../Css/toolkit.css';
   const navigate = useNavigate();
 
   const handleSearch = () => {
+    console.log('[DEBUG] handleSearch 실행됨');
+    const trimmedQuery = searchTerm.trim();
     // 1. 검색어 없이 검색 버튼을 눌렀을 때 알림 띄우기
     if (!searchTerm.trim()) {
       alert('검색어를 입력해 주세요');
       return; // 함수 실행을 여기서 중단
     }
+    const targetUrl = `/search?query=${encodeURIComponent(trimmedQuery)}`;
+     console.log(`[DEBUG] Navigating to: ${targetUrl}`);
 
     // 검색어가 있으면 쿼리 파라미터와 함께 SearchPage로 이동합니다.
     navigate(`/search?query=${encodeURIComponent(searchTerm.trim())}`);
@@ -24,7 +28,9 @@ import '../Css/toolkit.css';
   const handleKeyPress = (e) => {
     // 엔터 키를 눌렀을 때 검색 함수를 호출합니다.
     if (e.key === 'Enter') {
+      console.log('[DEBUG] Enter 키 감지 - handleSearch 호출');
       handleSearch();
+      e.preventDefault(); 
     }
   };
 
@@ -37,7 +43,7 @@ import '../Css/toolkit.css';
         onChange={(e) => setSearchTerm(e.target.value)}
         onKeyPress={handleKeyPress}
       />
-      <button onClick={handleSearch}>검색</button>
+      <button type="button" onClick={handleSearch}>검색</button> 
     </div>
   );
 }
