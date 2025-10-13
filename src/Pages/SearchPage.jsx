@@ -6,8 +6,9 @@ import "../Css/SearchPage.css";
 import Footer from "../Components/Footer";
 import SearchBar from "../Components/SearchBar";
 import { submitLoanRequest } from '../Api/loan'; 
-import CustomModal from '../Components/LoanModal';
+import SuccessModal from '../Components/SuccessModal';
 import LoginRequiredModal from '../Components/LoginModal';
+import ConfirmModalLoan from '../Components/ConfirmModalLoan';
 
 
 import red_hearts from "../Images/red_hearts.png";
@@ -322,56 +323,11 @@ async function submitReserveRequest(bookId) {
             return;
         }
         
-        // window.confirm 대신 커스텀 모달 상태 설정
         setConfirmLoanState({
             isOpen: true,
             book: book, // 도서 정보 저장
         });
     };
-// 🌟🌟🌟 ConfirmModal 컴포넌트 정의 🌟🌟🌟
-const confirmModal_loan = ({ isOpen, message, onConfirm, onCancel }) => {
-    if (!isOpen) return null;
-
-    return (
-        <div 
-            className="modal-backdrop"
-            style={{
-                position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, 
-                backgroundColor: 'rgba(0,0,0,0.5)', 
-                display: 'flex', justifyContent: 'center', alignItems: 'center',
-                zIndex: 1100 
-            }}
-        >
-            <div 
-                className="modal-content"
-                style={{
-                    backgroundColor: 'white', padding: '25px', borderRadius: '8px', 
-                    textAlign: 'center', maxWidth: '350px'
-                }}
-                onClick={e => e.stopPropagation()}
-            >
-                {/* 제목 (도서 제목)과 메시지 */}
-                <p style={{ fontWeight: 'bold', fontSize: '1.1em', marginBottom: '15px' }}>{message}</p>
-                <p>대출을 진행하시겠습니까?</p>
-
-                <div className="popup-buttons" style={{ display: 'flex', justifyContent: 'space-around', gap: '10px', marginTop: '25px' }}>
-                    <button 
-                        onClick={onCancel} 
-                        style={{ flex: 1, padding: '8px 15px', cursor: 'pointer',color:'black', backgroundColor: 'white', border: '1px solid #ccc' }}
-                    >
-                        아니요 (취소)
-                    </button>
-                    <button 
-                        onClick={onConfirm} 
-                        style={{ flex: 1, padding: '8px 15px', cursor: 'pointer', backgroundColor: '#0095ff', color: 'white', border: 'none' }}
-                    >
-                        예 (확인)
-                    </button>
-                </div>
-            </div>
-        </div>
-    );
-};
 
 const ConfirmModalRe = ({ isOpen, message, onConfirm, onCancel }) => {
     if (!isOpen) return null;
@@ -602,7 +558,7 @@ const navigateToLogin = () => {
       )}
 
       <Footer />
-      <handleLoanSuccessNavigation 
+      <ConfirmModalLoan
           isOpen={confirmLoanState.isOpen}
           message={confirmLoanState.book ? `[${confirmLoanState.book.code}] ${confirmLoanState.book.title}` : '도서 정보를 확인할 수 없습니다.'}
           onConfirm={executeLoan} 
@@ -615,11 +571,11 @@ const navigateToLogin = () => {
           onConfirm={executeReserve} // 예약 실행 로직 연결
           onCancel={closeConfirmModal}
       />
-      <CustomModal
+      <SuccessModal
         isOpen={isModalOpen}
         message={modalMessage}
         onClose={closeModal}
-        onConfirm={confirmModal_loan}
+        onConfirm={closeConfirmModal}
       />
       <LoginRequiredModal
                 isOpen={isLoginModalOpen}

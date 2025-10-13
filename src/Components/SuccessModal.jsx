@@ -1,10 +1,5 @@
-// src/Components/CustomModal.jsx
 
-import React from 'react';
-// CustomModal은 어디서든 사용될 수 있으므로, navigate를 사용하지 않도록 수정합니다.
-// onConfirm, onClose 콜백 함수를 통해 상위 컴포넌트에 액션을 위임합니다.
-
-const CustomModal = ({ isOpen, message, onClose, onConfirm }) => {
+const SuccessModal = ({ isOpen, message, onClose, onConfirm }) => {
     if (!isOpen) return null;
     
     // '✅'로 시작하면 성공, 아니면 실패로 간주 (loan.js의 에러 형식과 일치)
@@ -53,4 +48,4 @@ const CustomModal = ({ isOpen, message, onClose, onConfirm }) => {
     );
 };
 
-export default CustomModal;
+export default SuccessModal;
