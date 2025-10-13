@@ -384,6 +384,10 @@ const ConfirmModalRe = ({ isOpen, message, onConfirm, onCancel }) => {
     setIsModalOpen(false);
   };
   
+  const MainPageNavigate = () => {
+      setIsModalOpen(false);
+      navigate('/');
+  };
 
 const navigateToLogin = () => {
         setIsLoginModalOpen(false);
@@ -575,7 +579,7 @@ const navigateToLogin = () => {
         isOpen={isModalOpen}
         message={modalMessage}
         onClose={closeModal}
-        onConfirm={closeConfirmModal}
+        onConfirm={MainPageNavigate}
       />
       <LoginRequiredModal
                 isOpen={isLoginModalOpen}
