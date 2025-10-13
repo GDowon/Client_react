@@ -40,7 +40,8 @@
 }
 
 .notification { 
-  width: 100px;
+  max-width: 100px;
+  min-width: 50px;
   height: 100px;
   display: flex;
   flex-direction: column; 
