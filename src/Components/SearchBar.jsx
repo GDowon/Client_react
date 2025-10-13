@@ -10,7 +10,8 @@ import '../Css/toolkit.css';
   const navigate = useNavigate();
 
   const handleFormSubmit = (e) => {
-    e.preventDefault(); // ⬅️ 폼 제출의 기본 동작(페이지 새로고침) 방지
+    e.preventDefault(); 
+    console.log('--- [DEBUG] Form Submit Event Fired ---'); 
 
     const trimmedQuery = searchTerm.trim();
     if (!trimmedQuery) {
@@ -18,6 +19,8 @@ import '../Css/toolkit.css';
       return; 
     }
     // 🌟 navigate로 라우터 이동
+     const targetUrl = `/search?query=${encodeURIComponent(trimmedQuery)}`;
+    console.log('--- [DEBUG] Navigating to:', targetUrl); 
     navigate(`/search?query=${encodeURIComponent(trimmedQuery)}`);
   };
 
