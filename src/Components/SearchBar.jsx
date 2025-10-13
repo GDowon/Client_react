@@ -1,41 +1,39 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useSearchParams } from 'react-router-dom';
 
 import '../Css/toolkit.css'; 
 
-function SearchBar() {
-  const [searchTerm, setSearchTerm] = useState('');
+ function SearchBar() {
+  const [searchParams] = useSearchParams();
+  const initialQuery = searchParams.get("query") || "";
+  const [searchTerm, setSearchTerm] = useState(initialQuery); 
   const navigate = useNavigate();
 
-  const handleSearch = () => {
-    // 1. 검색어 없이 검색 버튼을 눌렀을 때 알림 띄우기
-    if (!searchTerm.trim()) {
+  const handleFormSubmit = (e) => {
+    e.preventDefault(); // ⬅️ 폼 제출의 기본 동작(페이지 새로고침) 방지
+
+    const trimmedQuery = searchTerm.trim();
+    if (!trimmedQuery) {
       alert('검색어를 입력해 주세요');
-      return; // 함수 실행을 여기서 중단
+      return; 
     }
-
-    // 검색어가 있으면 쿼리 파라미터와 함께 SearchPage로 이동합니다.
-    navigate(`/search?query=${encodeURIComponent(searchTerm.trim())}`);
+    // 🌟 navigate로 라우터 이동
+    navigate(`/search?query=${encodeURIComponent(trimmedQuery)}`);
   };
 
-  const handleKeyPress = (e) => {
-    // 엔터 키를 눌렀을 때 검색 함수를 호출합니다.
-    if (e.key === 'Enter') {
-      handleSearch();
-    }
-  };
-
-  return (
-    <div className="search-bar">
+   return (
+    // 🌟 div를 form으로 변경하고 onSubmit 핸들러 연결
+    <form className="search-bar" onSubmit={handleFormSubmit}>
       <input
         type="text"
         placeholder="검색어를 입력하세요"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        onKeyPress={handleKeyPress}
+        // 🚨 onKeyPress 이벤트는 제거
       />
-      <button onClick={handleSearch}>검색</button>
-    </div>
+      {/* 🌟 button에 type="submit"을 명시해도 되고, 기본값이 submit이므로 생략 가능 */}
+      <button type="submit">검색</button> 
+    </form>
   );
 }
 
