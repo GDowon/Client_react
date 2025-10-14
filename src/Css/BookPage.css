@@ -49,6 +49,22 @@
   margin: 4px;
 }
 
+.subject-tags { 
+  flex: 1;
+  width: 100%;
+  background-color: #E3F2FD;
+  padding: 12px 16px;
+  border-radius: 5px;        
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  margin-top: 20px;
+}
+
+.subject-tags p {
+  margin: 4px;
+}
+
+
 /* 버튼 3등분 */
 .bbuttons-row {
   display: grid;
@@ -122,7 +138,7 @@ p {
 
 /* 리뷰 영역 */
 .review {
-  margin-top: 30px;
+  margin-top: 20px;
   width: 100%;
   background-color: #E3F2FD;
   padding: 12px 16px;
