@@ -88,6 +88,7 @@ const FALLBACK_BOOK = {
   details: '-',
   notes: '-',
   coverUrl: '',
+  MJcode:'-',
 };
 
 const toText = (v) =>
@@ -183,6 +184,7 @@ export default function BookPage() {
             notes: toText(d?.notes),
             coverUrl: d?.image_url || '',
             code: d?.book_code || d?.code || '', 
+            MJcode: toText(d?.book_code),
           });
 
 
@@ -370,13 +372,9 @@ const handleRent = async () => {
                 <p><strong>제목:</strong> <span>{bookData.title}</span></p>
                 <p><strong>저자:</strong> <span>{bookData.author}</span></p>
                 <p><strong>판사항:</strong> <span>{bookData.edition}</span></p>
-                <p><strong>발행사항:</strong> <span>{bookData.publisher}</span></p>
-                <p><strong>형태사항:</strong> <span>{bookData.format}</span></p>
                 <p><strong>청구기호:</strong> <span>{bookData.callNumber}</span></p>
+                <p><strong>등록번호:</strong> <span>{bookData.MJcode}</span></p>
                 <p><strong>장서상태:</strong> <span className={`status-${bookData.status}`}>{bookData.status}</span></p>
-                <p><strong>총서정보:</strong> <span>{bookData.series}</span></p>
-                <p><strong>상세정보:</strong> <span>{bookData.details}</span></p>
-                
               </div>
             </div>
 
@@ -393,6 +391,10 @@ const handleRent = async () => {
 
           <div className="subject-tags">
             <h3>상세 장서 정보</h3>
+            <p><strong>발행사항:</strong> <span>{bookData.publisher}</span></p>
+            <p><strong>형태사항:</strong> <span>{bookData.format}</span></p>
+            <p><strong>총서정보:</strong> <span>{bookData.series}</span></p>
+            <p><strong>상세정보:</strong> <span>{bookData.details}</span></p>
             <p><strong>주기:</strong> <span>{bookData.notes}</span></p>
           </div>
 
