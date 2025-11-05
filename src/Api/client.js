@@ -1,4 +1,4 @@
-const BASE = process.env.REACT_APP_API_BASE_URL || (window.ENV && window.ENV.API_BASE_URL) || "https://mungo.p-e.kr";
+const BASE = process.env.REACT_APP_API_BASE_URL || (window.ENV && window.ENV.API_BASE_URL) || "https://mungo.n-e.kr/";
 const REFRESH_ENDPOINT = (window.REFRESH_ENDPOINT) || "/users/token/refresh/";
 
 async function request(path, { method="GET", body, headers={}, retry=true } = {}){

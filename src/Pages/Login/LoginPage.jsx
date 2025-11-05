@@ -21,7 +21,7 @@ function LoginPage() {
 
 
 
-    const apiUrl = 'https://mungo.p-e.kr/users/login/';
+    const apiUrl = 'https://mungo.n-e.kr/users/login/';
 
     console.log('로그인 API URL:', apiUrl);
 

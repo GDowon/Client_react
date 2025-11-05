@@ -5,7 +5,7 @@ import '../../Css/MyPage.css';
 // ----------------------------------------------------
 // API Helper 함수 및 데이터 Fetch 로직
 // ----------------------------------------------------
-const BASE_URL = 'https://mungo.p-e.kr';
+const BASE_URL = 'https://mungo.n-e.kr/';
 
 const authHeaders = () => {
     const a = localStorage.getItem("accessToken");

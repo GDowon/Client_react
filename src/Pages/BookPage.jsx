@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import '../Css/font.css';
 import '../Css/BookPage.css';
 
-const BASE = 'https://mungo.p-e.kr';
+const BASE = 'https://mungo.n-e.kr/';
 
 /** ✅ access token 추출 함수 (여러 키명 대응) */
 const getAuthHeaders = () => {

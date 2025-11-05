@@ -44,7 +44,7 @@ function Signup() {
       return;
     }
 
-    const apiUrl = 'https://mungo.p-e.kr/users/signup/';
+    const apiUrl = 'https://mungo.n-e.kr/users/signup/';
     console.log('회원가입 API URL:', apiUrl);
 
     try {
