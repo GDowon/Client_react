@@ -28,7 +28,7 @@ function FindId() {
       return;
     }
 
-    const apiUrl = 'https://mungo.p-e.kr/users/find-username/';
+    const apiUrl = 'https://mungo.n-e.kr/users/find-username/';
     console.log('아이디 찾기 API URL:', apiUrl);
 
     try {

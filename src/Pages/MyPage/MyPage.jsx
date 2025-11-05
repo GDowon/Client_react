@@ -128,7 +128,7 @@ function MyPage() {
             target="_blank" 
             rel="noopener noreferrer"
         >
-          오류 문의 <span>›</span>
+          오류 문의 (관리자) <span>›</span>
         </a>
         <div className="nav-link" onClick={() => navigate('/CurrentBorrow')}>
           <span style={{ display: 'inline-flex', alignItems: 'center' }}>

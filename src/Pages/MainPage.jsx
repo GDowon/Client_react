@@ -8,7 +8,7 @@ import PostList from '../Components/PostList';
 
 import noticebanner from '../Images/banner.png';
 
-const BASE_URL = 'https://mungo.p-e.kr';
+const BASE_URL = 'https://mungo.n-e.kr';
 
 const getAuthHeaders = (token) => {
     return {
@@ -205,7 +205,7 @@ function MainPage() {
       <div className="section-wrapper">
         <div className="section-header">
           <span>📢 공지</span>
-          <Link className="plus-button" to="/NoticePage">＋</Link>
+          <div className="plus-button" to="/NoticePage">＋</div>
         </div>
         <div className="banner-card">
           <Link to="/NoticePage">
