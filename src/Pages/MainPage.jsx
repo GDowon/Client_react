@@ -8,7 +8,7 @@ import PostList from '../Components/PostList';
 
 import noticebanner from '../Images/banner.png';
 
-const BASE_URL = 'https://mungo.n-e.kr/';
+const BASE_URL = 'https://mungo.n-e.kr';
 
 const getAuthHeaders = (token) => {
     return {

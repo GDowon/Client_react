@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://mungo.n-e.kr/';
+export const BASE_URL = 'https://mungo.n-e.kr';
 
 // 1. 인증 헤더 가져오기 (공통)
 export const getAuthHeaders = () => {

@@ -10,7 +10,7 @@ import LoanForm from '../../Components/LoanForm';
 // API Helper 함수와 CustomModal은 LoanLoan.jsx에서 가져와야 합니다.
 // (생략된 fetchJSON, CustomModal, getAuthHeaders 등은 상단에 있다고 가정)
 // ********************************************
-const BASE_URL = 'https://mungo.n-e.kr/';
+const BASE_URL = 'https://mungo.n-e.kr';
 const getAuthHeaders = () => {
     const token = localStorage.getItem('accessToken');
     return token ? { Authorization: `Bearer ${token}` } : {};
