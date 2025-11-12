@@ -32,11 +32,14 @@ import LoanChoice from './Pages/LoanPage/LoanChoice.jsx';
 import LoanLoan from './Pages/LoanPage/LoanLoan.jsx';
 import LoanReturn from './Pages/LoanPage/LoanReturn.jsx';
 
+import Interest from './Pages/MyPage/Interest.jsx';
+
 function App() {
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<MainPage />} />
+        <Route path="/Interest" element={<Interest />} />
 
         {/* 현재 대출/연체/예약 */}
         <Route path="/CurrentBorrow" element={<CurrentBorrow />} />
