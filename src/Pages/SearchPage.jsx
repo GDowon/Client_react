@@ -36,6 +36,7 @@ const isLoggedIn = () => !!localStorage.getItem("accessToken");
 
 // 401이면 refresh 시도 후 한 번만 재시도
 async function withRefreshRetry(requestFn) {
+  try {
   let res = await requestFn();
   if (res.status !== 401) return res;
 
@@ -47,12 +48,25 @@ async function withRefreshRetry(requestFn) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ refresh }),
   });
-  if (!r.ok) return res;
+
+  if (!r.ok) {
+    if (r.status === 401 || r.status === 400) {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      return r;
+    }
+   return res;
+  }
 
   const { access } = await r.json().catch(() => ({}));
   if (access) localStorage.setItem("accessToken", access);
 
   return requestFn();
+
+  } catch (error) {
+    console.error("Fetch/Network Error in withRefreshRetry:", error);
+    throw error;
+  }
 }
 
 // 검색 (A안: /books/?search=, 404/405면 B안: /search/?q=)
@@ -70,7 +84,12 @@ async function searchBooksAPI(query, page = 1) {
       });
     res = await withRefreshRetry(callB);
   }
-  if (!res.ok) throw new Error(`검색 실패: ${res.status}`);
+  if (!res.ok) {
+    if (res.status === 401) {
+      throw new Error("로그인이 만료되었습니다. 재로그인 후 다시 시도해 주세요.");
+    }
+    throw new Error(`검색 실패: ${res.status}`);
+  }
 
   const data = await res.json();
   const list = Array.isArray(data) ? data : (data.results ?? []);
@@ -113,7 +132,12 @@ async function toggleLikeAPI(bookId, like) {
       });
     res = await withRefreshRetry(callB);
   }
-  if (!res.ok) throw new Error(`좋아요 실패: ${res.status}`);
+  if (!res.ok) {
+    if (res.status === 401) {
+      throw new Error("재로그인 후 좋아요 상태를 다시 시도해 주세요.");
+    }
+    throw new Error(`좋아요 실패: ${res.status}`);
+  }
   return res.json().catch(() => ({}));
 }
 
